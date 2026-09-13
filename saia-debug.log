@@ -1,0 +1,63 @@
+2026-09-11 01:21:12,634 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+2026-09-11 01:21:31,854 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+2026-09-11 01:22:01,836 | INFO | saia.aprendices | Pestaña seleccionada: saia
+2026-09-11 01:22:01,836 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-11 01:22:01,838 | INFO | saia.aprendices | Vista Aprendices creada
+2026-09-11 01:22:01,839 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-11 01:22:02,233 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=50
+2026-09-11 01:22:02,241 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=50
+2026-09-11 01:22:11,117 | INFO | matplotlib.category | Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2026-09-11 01:22:11,121 | INFO | matplotlib.category | Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2026-09-11 01:23:59,989 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+2026-09-11 01:24:16,058 | INFO | saia.aprendices | Pestaña seleccionada: saia
+2026-09-11 01:24:16,059 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-11 01:24:16,061 | INFO | saia.aprendices | Vista Aprendices creada
+2026-09-11 01:24:16,455 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=50
+2026-09-11 01:24:23,373 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-11 01:24:23,379 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=50
+2026-09-11 01:24:26,660 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-11 01:24:26,675 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=50
+2026-09-11 01:26:38,629 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+2026-09-11 01:26:48,840 | INFO | saia.aprendices | Pestaña seleccionada: saia
+2026-09-11 01:26:48,841 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-11 01:26:48,844 | INFO | saia.aprendices | Vista Aprendices creada
+2026-09-11 01:26:49,234 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=50
+2026-09-11 01:33:18,129 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+2026-09-11 01:37:04,568 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+2026-09-11 01:45:01,784 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+2026-09-11 01:50:57,548 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+2026-09-11 01:51:09,196 | INFO | saia.aprendices | Pestaña seleccionada: saia
+2026-09-11 01:51:09,196 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-11 01:51:09,199 | INFO | saia.aprendices | Vista Aprendices creada
+2026-09-11 01:51:09,605 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=50
+2026-09-11 01:52:39,179 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+2026-09-11 01:58:04,519 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+2026-09-11 01:58:14,925 | INFO | saia.aprendices | Pestaña seleccionada: saia
+2026-09-11 01:58:14,927 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-11 01:58:14,929 | INFO | saia.aprendices | Vista Aprendices creada
+2026-09-11 01:58:15,364 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=50
+2026-09-11 02:01:54,206 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+2026-09-11 02:03:01,656 | INFO | saia.aprendices | Pestaña seleccionada: saia
+2026-09-11 02:03:01,657 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-11 02:03:01,660 | INFO | saia.aprendices | Vista Aprendices creada
+2026-09-11 02:03:01,686 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=50
+2026-09-11 02:03:11,849 | WARNING | qt | QObject::killTimer: Timers cannot be stopped from another thread
+2026-09-11 02:03:11,850 | WARNING | qt | QObject::~QObject: Timers cannot be stopped from another thread
+2026-09-11 02:14:04,872 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+2026-09-11 02:16:53,553 | WARNING | qt | QObject::killTimer: Timers cannot be stopped from another thread
+2026-09-11 02:16:53,555 | WARNING | qt | QObject::~QObject: Timers cannot be stopped from another thread
+2026-09-11 02:16:58,197 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+2026-09-11 02:19:05,046 | WARNING | qt | QObject::killTimer: Timers cannot be stopped from another thread
+2026-09-11 02:19:05,047 | WARNING | qt | QObject::~QObject: Timers cannot be stopped from another thread
+2026-09-11 02:20:23,171 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+2026-09-11 02:28:44,772 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+2026-09-11 02:32:10,542 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+2026-09-11 17:18:28,165 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+2026-09-11 18:30:21,818 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+2026-09-13 17:01:00,741 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+2026-09-13 17:02:21,374 | INFO | saia.aprendices | Pestaña seleccionada: saia
+2026-09-13 17:02:21,375 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-13 17:02:21,375 | INFO | saia.aprendices | Vista Aprendices creada
+2026-09-13 17:02:21,386 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=50
+2026-09-13 17:11:10,160 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+2026-09-13 17:34:06,163 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
