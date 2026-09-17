@@ -10,11 +10,16 @@ from dotenv import load_dotenv
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 ENV_FILE = ROOT_DIR / ".env"
 load_dotenv(ENV_FILE)
+print("[DEBUG] ROOT_DIR:", ROOT_DIR)
+print("[DEBUG] ENV_FILE:", ENV_FILE)
+print("[DEBUG] .env existe:", ENV_FILE.exists())
+print("[DEBUG] DB_SAIA_PORT:", repr(os.getenv("DB_SAIA_PORT")))
+print("[DEBUG] DB_SAIA_PASSWORD:", repr(os.getenv("DB_SAIA_PASSWORD")))
 
 # ── Base de datos ───────────────────────────────────────────────────────────────
 DB_SAIA = {
     "host":     os.getenv("DB_SAIA_HOST", "127.0.0.1"),
-    "port":     int(os.getenv("DB_SAIA_PORT", "3306")),
+    "port":     int(os.getenv("DB_SAIA_PORT", "3307")),
     "user":     os.getenv("DB_SAIA_USER", "root"),
     "password": os.getenv("DB_SAIA_PASSWORD", ""),
     "database": os.getenv("DB_SAIA_NAME", "saia"),
@@ -24,7 +29,7 @@ DB_SAIA = {
 
 DB_SENA = {
     "host":     os.getenv("DB_SENA_HOST", "127.0.0.1"),
-    "port":     int(os.getenv("DB_SENA_PORT", "3306")),
+    "port":     int(os.getenv("DB_SENA_PORT", "3307")),
     "user":     os.getenv("DB_SENA_USER", "root"),
     "password": os.getenv("DB_SENA_PASSWORD", ""),
     "database": os.getenv("DB_SENA_NAME", "sena"),
