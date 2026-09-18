@@ -3,7 +3,7 @@ import logging
 import threading
 from PyQt6.QtWidgets import (
     QWidget, QFrame, QLabel, QPushButton, QVBoxLayout, QHBoxLayout,
-    QScrollArea, QSizePolicy,
+    QScrollArea, QSizePolicy, QMessageBox,
 )
 from PyQt6.QtCore import Qt, QObject, pyqtSignal
 
@@ -20,6 +20,7 @@ from app.ui.molecules.data_table import DataTable
 from app.ui.molecules.modal      import BaseModal, ConfirmModal
 from app.models.aprendiz_model      import AprendizSaiaModel, AprendizSenaModel
 from app.models.persona_model       import PersonaModel, CuentaModel
+from app.models.historial_model     import HistorialModel
 
 
 class _Sig(QObject):
@@ -208,6 +209,17 @@ class AprendicesView(QWidget):
     # ── Acciones ──────────────────────────────────────────────────────────────
     def _bloquear(self, row: dict):
         nombre = f"{row.get('nombres','')} {row.get('p_ape','')}".strip()
+        try:
+            if HistorialModel.esta_dentro(row["num_doc"]):
+                QMessageBox.warning(
+                    self,
+                    "No se puede bloquear",
+                    "No se puede bloquear a este aprendiz ya que se encuentra dentro de la institución"
+                )
+                return
+        except Exception as e:
+            self._status.setText(f"Error verificando el ingreso: {e}")
+            return
         dlg = ConfirmModal(self, "Bloquear cuenta",
             f"¿Bloquear la cuenta de {nombre}?\nNo podrá iniciar sesión ni usar el QR.",
             confirm_text="Bloquear", danger=True)

@@ -8,7 +8,7 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import QObject, pyqtSignal
 
 from app.ui.theme import (
-    BG_APP, BG_CARD, BORDER, PRIMARY, TEXT_MUTED, CARD_RADIUS, font,
+    BG_APP, BG_CARD, BORDER, PRIMARY, TEXT_PRIMARY, TEXT_MUTED, CARD_RADIUS, font,
 )
 from app.ui.atoms.buttons  import SecondaryButton, PrimaryButton
 from app.ui.atoms.inputs   import SearchInput, TextInput
@@ -104,8 +104,8 @@ class HistorialView(QWidget):
     def _render_estado(self, parent, row, val):
         w = QWidget(parent); w.setStyleSheet("background:transparent;")
         h = QHBoxLayout(w); h.setContentsMargins(4,0,0,0)
-        estado = (val or "INGRESO").upper()
-        h.addWidget(Badge(preset="ingreso" if estado=="INGRESO" else "salida"))
+        estado = str(val or "1").upper()
+        h.addWidget(Badge(preset="ingreso" if estado in ("1", "INGRESO") else "salida"))
         h.addStretch(); return w
 
     def _render_guarda(self, parent, row, _val):
@@ -117,7 +117,7 @@ class HistorialView(QWidget):
         ])) or "—"
         w.setText(nombre)
         w.setFont(font(12))
-        w.setStyleSheet("background:transparent;")
+        w.setStyleSheet(f"color:{TEXT_PRIMARY}; background:transparent;")
         return w
 
     def load_data(self, search: str = None):

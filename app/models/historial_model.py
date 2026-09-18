@@ -7,6 +7,17 @@ from app.config.database import db_saia
 class HistorialModel:
 
     @staticmethod
+    def esta_dentro(num_doc: int) -> bool:
+        """Indica si la persona tiene un ingreso sin salida registrada."""
+        row = db_saia.fetch_one(
+            """SELECT 1 FROM historial
+               WHERE num_doc=%s AND fecha_hora_salida IS NULL
+               LIMIT 1""",
+            (num_doc,)
+        )
+        return row is not None
+
+    @staticmethod
     def get_all(search: str = "", limit: int = 200,
                 fecha_inicio: str = None, fecha_fin: str = None) -> list[dict]:
         where = []

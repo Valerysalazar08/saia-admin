@@ -19,7 +19,7 @@ from app.ui.atoms.buttons import SecondaryButton
 from app.ui.atoms.labels  import Divider
 from app.models.aprendiz_model  import AprendizSaiaModel
 from app.models.guarda_model    import GuardaModel
-from app.models.historial_model import HistorialModel, InsumoModel
+from app.models.historial_model import HistorialModel
 from app.config.database        import db_saia
 
 
@@ -129,7 +129,8 @@ class DashboardView(QScrollArea):
 
         self._timer = QTimer(self)
         self._timer.timeout.connect(self.refresh)
-        self._timer.start(30000)
+        # Mantiene los datos del inicio al día sin exigir navegación manual.
+        self._timer.start(10000)
 
         content = QWidget()
         content.setStyleSheet(f"background: {BG_APP};")
@@ -159,13 +160,13 @@ class DashboardView(QScrollArea):
         tl.addWidget(ref)
         self._lay.addWidget(top)
 
-        sub = QLabel("Resumen del sistema — se actualiza automáticamente cada 30 segundos")
+        sub = QLabel("Resumen del sistema — se actualiza automáticamente cada 10 segundos")
         sub.setFont(font(11))
         sub.setStyleSheet(f"color: {TEXT_MUTED}; background: transparent;")
         sub.setContentsMargins(0, 4, 0, 20)
         self._lay.addWidget(sub)
 
-        # ── Fila 1: 4 tarjetas ────────────────────────────────────────────────
+        # ── Fila 1: 3 tarjetas ────────────────────────────────────────────────
         row1 = QWidget(); row1.setStyleSheet("background: transparent;")
         r1l  = QHBoxLayout(row1); r1l.setContentsMargins(0,0,0,0); r1l.setSpacing(12)
 
@@ -174,7 +175,6 @@ class DashboardView(QScrollArea):
             ("Aprendices registrados", "users",          PRIMARY),
             ("Guardas activos",        "shield",         SECONDARY),
             ("Ingresos hoy",           "clipboard-list", WARNING),
-            ("Insumos activos",        "package",        "#9333EA"),
         ]:
             c = _StatCard(title, "—", icon, color)
             self._cards.append(c)
@@ -204,11 +204,11 @@ class DashboardView(QScrollArea):
 
         self._recent_card  = self._list_card("Accesos recientes",      "clock",  show_ver=True)
         self._recent_body, self._recent_lay = self._scroll_body(self._recent_card)
-        cl.addWidget(self._recent_card, stretch=3)
+        cl.addWidget(self._recent_card, stretch=1)
 
         self._guardas_card = self._list_card("Guardas en turno activo","shield", show_ver=False)
         self._guardas_body, self._guardas_lay = self._scroll_body(self._guardas_card)
-        cl.addWidget(self._guardas_card, stretch=2)
+        cl.addWidget(self._guardas_card, stretch=1)
 
         self._lay.addWidget(cols, stretch=1)
 
@@ -227,7 +227,7 @@ class DashboardView(QScrollArea):
         lay = QVBoxLayout(card); lay.setContentsMargins(0,0,0,0); lay.setSpacing(0)
 
         hdr = QWidget(); hdr.setStyleSheet("background: transparent;")
-        hl  = QHBoxLayout(hdr); hl.setContentsMargins(16, 14, 16, 10); hl.setSpacing(8)
+        hl  = QHBoxLayout(hdr); hl.setContentsMargins(14, 8, 14, 6); hl.setSpacing(8)
 
         ic = QLabel()
         ic.setPixmap(svg_icon(icon_name, 15, PRIMARY))
@@ -262,7 +262,7 @@ class DashboardView(QScrollArea):
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
         scroll.setFrameShape(QFrame.Shape.NoFrame)
-        scroll.setFixedHeight(260)
+        scroll.setFixedHeight(220)
         scroll.setStyleSheet(f"""
             QScrollArea {{ background: transparent; border: none; }}
             QScrollBar:vertical {{
@@ -306,7 +306,7 @@ class DashboardView(QScrollArea):
         try:
             r1 = db_saia.fetch_one(
                 "SELECT COUNT(*) AS total FROM historial "
-                "WHERE fecha_hora_salida IS NULL AND estado_movimiento='INGRESO'")
+                "WHERE fecha_hora_salida IS NULL")
             dentro = r1["total"] if r1 else 0
             r2 = db_saia.fetch_one("SELECT COUNT(*) AS total FROM cuenta WHERE estado=1")
             activas = r2["total"] if r2 else 0
@@ -314,13 +314,12 @@ class DashboardView(QScrollArea):
                 "aprendices":      AprendizSaiaModel.count(),
                 "guardas":         GuardaModel.count(),
                 "ingresos_hoy":    HistorialModel.count_hoy(),
-                "insumos":         InsumoModel.count(),
                 "ingresos_mes":    HistorialModel.count_mes(),
                 "cuentas_activas": activas,
                 "dentro_sena":     dentro,
             }
         except Exception:
-            stats = {k: "—" for k in ["aprendices","guardas","ingresos_hoy","insumos",
+            stats = {k: "—" for k in ["aprendices","guardas","ingresos_hoy",
                                         "ingresos_mes","cuentas_activas","dentro_sena"]}
         self._sig.stats_ready.emit(stats)
 
@@ -340,7 +339,7 @@ class DashboardView(QScrollArea):
         self._sig.guardas_ready.emit(rows_g)
 
     def _update_stats(self, s: dict):
-        for card, v in zip(self._cards, [s["aprendices"],s["guardas"],s["ingresos_hoy"],s["insumos"]]):
+        for card, v in zip(self._cards, [s["aprendices"],s["guardas"],s["ingresos_hoy"]]):
             card.update_value(v)
         self._stat_mes.update_value(s["ingresos_mes"])
         self._stat_activos.update_value(s["cuentas_activas"])
@@ -412,3 +411,8 @@ class DashboardView(QScrollArea):
 
     def closeEvent(self, event):
         self._timer.stop(); super().closeEvent(event)
+
+    # MainWindow utiliza load_data para refrescar las vistas que tiene en caché.
+    # Exponer este alias hace que Inicio se refresque también al volver a él.
+    def load_data(self):
+        self.refresh()
