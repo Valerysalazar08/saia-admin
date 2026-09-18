@@ -133,9 +133,11 @@ class _DatePickerField(QWidget):
         dialog = QDialog(self)
         dialog.setWindowTitle("Seleccionar fecha de nacimiento")
         dialog.setModal(True)
-        dialog.setStyleSheet(f"background:white; border:1px solid {BORDER};")
+        # El tamaño fijo evita que el diálogo crezca al cambiar de mes o año.
+        dialog.setFixedSize(390, 324)
+        dialog.setStyleSheet(f"background:white; border:1px solid {BORDER}; border-radius:12px;")
         layout = QVBoxLayout(dialog)
-        layout.setContentsMargins(8, 8, 8, 8)
+        layout.setContentsMargins(12, 12, 12, 12)
 
         calendar = QCalendarWidget(dialog)
         calendar.setSelectedDate(self._date)
@@ -147,23 +149,28 @@ class _DatePickerField(QWidget):
         calendar.setHorizontalHeaderFormat(
             QCalendarWidget.HorizontalHeaderFormat.ShortDayNames)
         calendar.setNavigationBarVisible(True)
+        calendar.setFixedSize(366, 300)
         calendar.setStyleSheet(f"""
-            QCalendarWidget {{ background:white; color:{TEXT_PRIMARY}; }}
-            QCalendarWidget QWidget {{ background:white; color:{TEXT_PRIMARY}; }}
-            QCalendarWidget QToolButton {{
-                color:{TEXT_PRIMARY}; background:transparent; border:none;
-                font-weight:bold; font-size:12px; min-width:72px; padding:5px;
+            QCalendarWidget {{
+                background:white; color:{TEXT_PRIMARY};
+                border:1px solid {BORDER}; border-radius:10px;
             }}
-            QCalendarWidget QToolButton:hover {{ background:{BG_HOVER}; border-radius:6px; }}
+            QCalendarWidget QToolButton {{
+                color:{TEXT_PRIMARY}; background:#F8FAFC; border:none;
+                border-radius:6px; font-weight:bold; font-size:12px;
+                min-height:28px; padding:3px 8px;
+            }}
+            QCalendarWidget QToolButton:hover {{ background:{BG_HOVER}; }}
             QCalendarWidget QToolButton#qt_calendar_prevmonth,
             QCalendarWidget QToolButton#qt_calendar_nextmonth {{
-                min-width:28px; max-width:28px; color:{PRIMARY}; font-size:16px;
+                min-width:28px; max-width:28px; min-height:28px; max-height:28px;
+                padding:0; color:{PRIMARY}; font-size:16px;
             }}
             QCalendarWidget QMenu {{ background:white; color:{TEXT_PRIMARY}; border:1px solid {BORDER}; }}
-            QCalendarWidget QSpinBox {{ color:{TEXT_PRIMARY}; background:white; border:none; padding:3px; }}
+            QCalendarWidget QSpinBox {{ color:{TEXT_PRIMARY}; background:white; border:none; padding:2px; }}
             QCalendarWidget QAbstractItemView {{
                 background:white; color:{TEXT_PRIMARY}; selection-background-color:{PRIMARY};
-                selection-color:white; outline:0; font-size:12px;
+                selection-color:white; outline:0; font-size:12px; gridline-color:{BORDER};
             }}
         """)
         layout.addWidget(calendar)
@@ -306,6 +313,7 @@ class GuardasView(QWidget):
                 except Exception: pass
                 self.load_data()
                 self._refresh_cached_view("bloqueo")
+                self._refresh_cached_view("dashboard")
                 ConfirmModal(
                     self, "Guarda desactivado",
                     "La cuenta fue desactivada y sus registros históricos se conservaron.",

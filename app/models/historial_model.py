@@ -37,6 +37,7 @@ class HistorialModel:
         where_sql = ("WHERE " + " AND ".join(where)) if where else ""
         q = f"""
             SELECT h.*,
+                   COALESCE(NULLIF(h.porteria, ''), 'Porteria N.2') AS porteria_mostrada,
                    p.nombres, p.p_ape, p.tip_doc,
                    pg.nombres AS guarda_nombres, pg.p_ape AS guarda_ape
             FROM historial h

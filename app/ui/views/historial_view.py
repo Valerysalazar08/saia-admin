@@ -82,7 +82,7 @@ class HistorialView(QWidget):
             {"key":"nombres",            "header":"Nombre",    "width":160},
             {"key":"p_ape",              "header":"Apellido",  "width":130},
             {"key":"num_doc",            "header":"Documento", "width":120},
-            {"key":"porteria",           "header":"Portería",  "width":100},
+            {"key":"porteria_mostrada",  "header":"Portería",  "width":100},
             {"key":"estado_movimiento",  "header":"Estado",    "width":90,
              "renderer": self._render_estado},
             {"key":"guarda_nombres",     "header":"Guarda",    "width":170,

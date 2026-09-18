@@ -113,7 +113,12 @@ class GuardaModel:
 
     @staticmethod
     def count() -> int:
-        row = db_saia.fetch_one("SELECT COUNT(*) AS total FROM personal_seguridad")
+        row = db_saia.fetch_one("""
+            SELECT COUNT(*) AS total
+            FROM personal_seguridad ps
+            JOIN cuenta c ON c.num_doc = ps.num_doc
+            WHERE c.id_rol = 3 AND c.estado = 1
+        """)
         return row["total"] if row else 0
 
     # ── Turnos ──────────────────────────────────────────────────────────────────
