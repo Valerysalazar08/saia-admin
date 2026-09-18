@@ -61,9 +61,71 @@
 2026-09-13 17:02:21,386 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=50
 2026-09-13 17:11:10,160 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
 2026-09-13 17:34:06,163 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+<<<<<<< HEAD
 2026-09-14 19:26:46,920 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
 2026-09-16 08:49:29,607 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
 2026-09-16 08:50:05,364 | INFO | saia.aprendices | Pestaña seleccionada: saia
 2026-09-16 08:50:05,364 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
 2026-09-16 08:50:05,365 | INFO | saia.aprendices | Vista Aprendices creada
 2026-09-16 08:50:05,381 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=0
+=======
+2026-09-13 21:37:26,237 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Vigte\OneDrive\Desktop\SAIA Admin\saia-admin\saia-debug.log
+2026-09-13 21:51:20,329 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Vigte\OneDrive\Desktop\SAIA Admin\saia-admin\saia-debug.log
+2026-09-13 21:59:50,063 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Vigte\OneDrive\Desktop\SAIA Admin\saia-admin\saia-debug.log
+2026-09-13 22:04:08,382 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Vigte\OneDrive\Desktop\SAIA Admin\saia-admin\saia-debug.log
+2026-09-13 22:04:20,769 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Vigte\OneDrive\Desktop\SAIA Admin\saia-admin\saia-debug.log
+2026-09-13 22:06:59,003 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Vigte\OneDrive\Desktop\SAIA Admin\saia-admin\saia-debug.log
+2026-09-13 22:09:14,939 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Vigte\OneDrive\Desktop\SAIA Admin\saia-admin\saia-debug.log
+2026-09-13 22:12:47,795 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Vigte\OneDrive\Desktop\SAIA Admin\saia-admin\saia-debug.log
+2026-09-13 22:13:48,448 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Vigte\OneDrive\Desktop\SAIA Admin\saia-admin\saia-debug.log
+2026-09-13 22:13:51,814 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Vigte\OneDrive\Desktop\SAIA Admin\saia-admin\saia-debug.log
+2026-09-13 22:18:57,530 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Vigte\OneDrive\Desktop\SAIA Admin\saia-admin\saia-debug.log
+2026-09-13 22:28:31,081 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Vigte\OneDrive\Desktop\SAIA Admin\saia-admin\saia-debug.log
+2026-09-13 23:14:32,090 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Vigte\OneDrive\Desktop\SAIA Admin\saia-admin\saia-debug.log
+2026-09-13 23:27:48,318 | INFO | saia.aprendices | Pestaña seleccionada: saia
+2026-09-13 23:27:48,319 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-13 23:27:48,321 | INFO | saia.aprendices | Vista Aprendices creada
+2026-09-13 23:27:48,354 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=5
+2026-09-13 23:28:47,322 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-13 23:28:47,336 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=5
+2026-09-13 23:35:14,223 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-13 23:35:14,233 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=5
+2026-09-13 23:35:19,634 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-13 23:35:19,644 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=4
+2026-09-13 23:36:15,745 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-13 23:36:15,754 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=5
+2026-09-13 23:40:13,988 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-13 23:40:13,998 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=5
+2026-09-13 23:40:15,969 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-13 23:40:15,979 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=5
+2026-09-13 23:40:28,795 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-13 23:40:28,801 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=5
+2026-09-13 23:40:43,349 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-13 23:40:43,358 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=5
+2026-09-13 23:41:00,501 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-13 23:41:00,510 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=5
+2026-09-13 23:41:07,921 | INFO | saia.aprendices | Pestaña seleccionada: sena
+2026-09-13 23:41:07,923 | INFO | saia.aprendices | Iniciando carga: pestaña=sena, búsqueda=''
+2026-09-13 23:41:07,972 | INFO | saia.aprendices | Carga completada: pestaña=sena, registros=4
+2026-09-13 23:41:10,855 | INFO | saia.aprendices | Pestaña seleccionada: saia
+2026-09-13 23:41:10,857 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-13 23:41:10,862 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=5
+2026-09-16 19:22:50,074 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Vigte\OneDrive\Desktop\SAIA Admin\saia-admin\saia-debug.log
+2026-09-16 19:28:07,256 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Vigte\OneDrive\Desktop\SAIA Admin\saia-admin\saia-debug.log
+2026-09-16 20:19:22,923 | INFO | saia.aprendices | Pestaña seleccionada: saia
+2026-09-16 20:19:22,924 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-16 20:19:22,925 | INFO | saia.aprendices | Vista Aprendices creada
+2026-09-16 20:19:22,932 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=5
+2026-09-16 20:19:27,751 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-16 20:19:27,755 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=5
+2026-09-16 20:19:33,360 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-16 20:19:33,363 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=5
+2026-09-16 20:20:34,153 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-16 20:20:34,158 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=5
+2026-09-16 20:20:37,641 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-16 20:20:37,644 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=4
+2026-09-16 20:20:43,109 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-16 20:20:43,113 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=4
+2026-09-16 20:20:50,450 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-16 20:20:50,455 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=5
+>>>>>>> ec4297d87868d6687cf5ee891fc4983a371701ee
