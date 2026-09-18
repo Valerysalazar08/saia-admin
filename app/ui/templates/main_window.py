@@ -19,7 +19,7 @@ VIEW_TITLES = {
     "guardas":      "Guardas de Seguridad",
     "historial":    "Historial de Ingresos",
     "insumos":      "Insumos y Equipos",
-    "reportes":     "Generador de Reportes",
+    "reportes":     "Reportes de rechazo",
     "estadisticas": "Estadísticas",
     "auditoria":    "Historial de Auditoría",
     "bloqueo":      "Usuarios Bloqueados",
@@ -141,7 +141,7 @@ class MainWindow(QWidget):
                 return EstadisticasView()
             elif view_id == "reportes":
                 from app.ui.views.reportes_view import ReportesView
-                return ReportesView()
+                return ReportesView(session_user=self._user)
             elif view_id == "auditoria":
                 from app.ui.views.auditoria_view import AuditoriaView
                 return AuditoriaView()
