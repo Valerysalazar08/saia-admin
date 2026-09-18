@@ -29,11 +29,9 @@ class Header(QFrame):
         lay.setContentsMargins(24, 0, 20, 0)
         lay.setSpacing(12)
 
-        # El título pertenece a la vista. El header queda reservado para fecha y hora
-        # para evitar repetir el mismo título en toda la interfaz.
         lay.addStretch(1)
 
-        # Ícono calendario (solo decorativo, no botón)
+        # Ícono calendario
         cal_ic = QLabel()
         cal_ic.setPixmap(svg_icon("calendar", 16, TEXT_MUTED))
         cal_ic.setFixedSize(18, 18)

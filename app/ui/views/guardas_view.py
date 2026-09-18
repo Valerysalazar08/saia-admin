@@ -79,7 +79,6 @@ class _CircularPhoto(QFrame):
 
 
 class _DatePickerField(QWidget):
-    """Campo de fecha con calendario; conserva la API de LabeledInput."""
 
     def __init__(self, parent=None, width: int = 236):
         super().__init__(parent)
@@ -161,12 +160,21 @@ class _DatePickerField(QWidget):
                 min-height:28px; padding:3px 8px;
             }}
             QCalendarWidget QToolButton:hover {{ background:{BG_HOVER}; }}
+            QCalendarWidget QToolButton#qt_calendar_monthbutton,
+            QCalendarWidget QToolButton#qt_calendar_yearbutton {{
+                background:#EAF6FF; color:#1677A8;
+            }}
+            QCalendarWidget QToolButton#qt_calendar_monthbutton:hover,
+            QCalendarWidget QToolButton#qt_calendar_yearbutton:hover {{
+                background:#D9F0FF; color:#0F6B99;
+            }}
             QCalendarWidget QToolButton#qt_calendar_prevmonth,
             QCalendarWidget QToolButton#qt_calendar_nextmonth {{
                 min-width:28px; max-width:28px; min-height:28px; max-height:28px;
                 padding:0; color:{PRIMARY}; font-size:16px;
             }}
             QCalendarWidget QMenu {{ background:white; color:{TEXT_PRIMARY}; border:1px solid {BORDER}; }}
+            QCalendarWidget QMenu::item:selected {{ background:#D9F0FF; color:#0F6B99; }}
             QCalendarWidget QSpinBox {{ color:{TEXT_PRIMARY}; background:white; border:none; padding:2px; }}
             QCalendarWidget QAbstractItemView {{
                 background:white; color:{TEXT_PRIMARY}; selection-background-color:{PRIMARY};
