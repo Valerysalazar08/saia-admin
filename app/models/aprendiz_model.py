@@ -86,33 +86,37 @@ class AprendizSenaModel:
 
 
 class AprendizSaiaModel:
-    """Aprendices en la BD saia — los que tienen cuenta con rol aprendiz."""
+    """Aprendices registrados en SAIA, tengan o no formación asignada."""
 
     @staticmethod
-    def get_all(search: str = "") -> list[dict]:
-        """Retorna todos los aprendices registrados en saia con info de sena."""
+    def get_all(search: str = "", filtro_formacion: str = "Todas") -> list[dict]:
+        """Retorna todos los aprendices registrados en SAIA, con o sin formación."""
+        condicion_formacion = {
+            "Con formación": " AND c.id_ficha IS NOT NULL",
+            "Sin formación": " AND c.id_ficha IS NULL",
+        }.get(filtro_formacion, "")
         if search:
-            q = """
+            q = f"""
                 SELECT p.num_doc, p.tip_doc, p.nombres, p.p_ape, p.tel,
                        p.email, p.sexo, p.fecha_nac,
                        c.id_cuenta, c.estado AS cuenta_estado, c.fecha_creacion,
                        c.id_ficha, c.id_programa, c.id_centro, c.imagen
                 FROM persona p
                 JOIN cuenta c ON p.num_doc = c.num_doc
-                WHERE c.id_rol = 1 AND c.estado = 1
+                WHERE c.id_rol = 1{condicion_formacion}
                   AND (p.nombres LIKE %s OR p.p_ape LIKE %s OR p.num_doc LIKE %s)
                 ORDER BY p.nombres
             """
             like = f"%{search}%"
             return db_saia.fetch_all(q, (like, like, like))
-        q = """
+        q = f"""
             SELECT p.num_doc, p.tip_doc, p.nombres, p.p_ape, p.tel,
                    p.email, p.sexo, p.fecha_nac,
                    c.id_cuenta, c.estado AS cuenta_estado, c.fecha_creacion,
                    c.id_ficha, c.id_programa, c.id_centro, c.imagen
             FROM persona p
             JOIN cuenta c ON p.num_doc = c.num_doc
-            WHERE c.id_rol = 1 AND c.estado = 1
+            WHERE c.id_rol = 1{condicion_formacion}
             ORDER BY p.nombres
         """
         return db_saia.fetch_all(q)

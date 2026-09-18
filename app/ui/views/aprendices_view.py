@@ -1,6 +1,4 @@
-"""
-VISTA Qt — Gestión de aprendices.
-"""
+"""VISTA Qt — Gestión de aprendices registrados en SAIA y SENA."""
 import logging
 import threading
 from PyQt6.QtWidgets import (
@@ -16,7 +14,7 @@ from app.ui.theme import (
     CARD_RADIUS, font, svg_icon,
 )
 from app.ui.atoms.buttons import PrimaryButton, SecondaryButton, TableActionButton
-from app.ui.atoms.inputs  import SearchInput
+from app.ui.atoms.inputs  import SearchInput, Dropdown
 from app.ui.atoms.labels  import Heading, Badge, Divider
 from app.ui.molecules.data_table import DataTable
 from app.ui.molecules.modal      import BaseModal, ConfirmModal
@@ -45,7 +43,7 @@ class AprendicesView(QWidget):
         # Toolbar
         toolbar = QWidget(); toolbar.setStyleSheet("background:transparent;")
         tb = QHBoxLayout(toolbar); tb.setContentsMargins(0,0,0,0)
-        tb.addWidget(Heading("Aprendices", level=2), stretch=1)
+        tb.addWidget(Heading("Personas", level=2), stretch=1)
         refresh = SecondaryButton("↺ Actualizar", width=120, height=34)
         refresh.clicked.connect(self.load_data)
         tb.addWidget(refresh)
@@ -55,14 +53,22 @@ class AprendicesView(QWidget):
         self._search = SearchInput(
             "Buscar por nombre o documento...", width=320,
             on_change=self._on_search)
+        filtro_row = QWidget(); filtro_row.setStyleSheet("background:transparent;")
+        fr = QHBoxLayout(filtro_row); fr.setContentsMargins(0,0,0,0); fr.setSpacing(10)
+        fr.addWidget(self._search)
+        self._filtro_formacion = Dropdown(
+            ["Todas", "Con formación", "Sin formación"], width=190,
+            command=self._on_filtro_formacion)
+        fr.addWidget(self._filtro_formacion)
+        fr.addStretch()
         lay.addSpacing(12)
-        lay.addWidget(self._search)
+        lay.addWidget(filtro_row)
 
         # Tabs
         tab_row = QWidget(); tab_row.setStyleSheet("background:transparent;")
         tr = QHBoxLayout(tab_row); tr.setContentsMargins(0,8,0,4); tr.setSpacing(0)
-        self._tab_saia = self._mk_tab("Registrados en SAIA", "saia")
-        self._tab_sena = self._mk_tab("BD SENA", "sena")
+        self._tab_saia = self._mk_tab("Personas registradas en SAIA", "saia")
+        self._tab_sena = self._mk_tab("Personas en formación SENA", "sena")
         tr.addWidget(self._tab_saia); tr.addWidget(self._tab_sena); tr.addStretch()
         lay.addWidget(tab_row)
 
@@ -74,7 +80,7 @@ class AprendicesView(QWidget):
             {"key":"email",         "header":"Email",      "width":200},
             # El ancho reserva separación visual entre la etiqueta QR y las
             # acciones de la siguiente columna.
-            {"key":"cuenta_estado", "header":"QR",         "width":100,
+            {"key":"cuenta_estado", "header":"Cuenta",     "width":100,
              "renderer":self._render_qr},
             {"key":"_acc",          "header":"Acciones",   "width":88,
              "renderer":self._render_acc},
@@ -126,8 +132,10 @@ class AprendicesView(QWidget):
         self._tab_sena.setChecked(tab_id == "sena")
         if tab_id == "saia":
             self._table._columns = self._cols_saia
+            self._filtro_formacion.show()
         else:
             self._table._columns = self._cols_sena
+            self._filtro_formacion.hide()
         self._table._build_header()
         self._search.clear()
         logging.getLogger("saia.aprendices").info("Pestaña seleccionada: %s", tab_id)
@@ -137,7 +145,7 @@ class AprendicesView(QWidget):
     def _render_qr(self, parent, row, val):
         w = QWidget(parent); w.setStyleSheet("background:transparent;")
         h = QHBoxLayout(w); h.setContentsMargins(4,0,0,0)
-        h.addWidget(Badge(preset="activo" if val==1 else "inactivo"))
+        h.addWidget(Badge(preset="activo" if val == 1 else "inactivo"))
         h.addStretch(); return w
 
     def _render_estado_sena(self, parent, row, val):
@@ -162,16 +170,18 @@ class AprendicesView(QWidget):
         h.addWidget(ver); h.addStretch(); return w
 
     # ── Datos ─────────────────────────────────────────────────────────────────
-    def load_data(self, search: str = ""):
+    def load_data(self, search: str = None):
+        search = self._search.get() if search is None else search
         sig = _Sig(self)
         sig.done.connect(self._on_data)
         tab = self._tab
+        filtro_formacion = self._filtro_formacion.get()
         logging.getLogger("saia.aprendices").info(
             "Iniciando carga: pestaña=%s, búsqueda=%r", tab, search)
         def fetch():
             try:
                 if tab == "saia":
-                    data = AprendizSaiaModel.get_all(search)
+                    data = AprendizSaiaModel.get_all(search, filtro_formacion)
                 else:
                     data = AprendizSenaModel.get_all(search)
                 logging.getLogger("saia.aprendices").info(
@@ -185,10 +195,15 @@ class AprendicesView(QWidget):
 
     def _on_data(self, data: list):
         self._table.load(data)
-        self._status.setText(f"{len(data)} aprendiz(ces) encontrado(s)")
+        etiqueta = "persona(s)" if self._tab == "saia" else "persona(s) en formación"
+        self._status.setText(f"{len(data)} {etiqueta} encontrada(s)")
 
     def _on_search(self, text: str):
         self.load_data(text)
+
+    def _on_filtro_formacion(self, _filtro: str):
+        if self._tab == "saia":
+            self.load_data()
 
     # ── Acciones ──────────────────────────────────────────────────────────────
     def _bloquear(self, row: dict):

@@ -14,7 +14,7 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
 
 from app.ui.theme import (
-    BG_APP, BG_CARD, BORDER, PRIMARY, SECONDARY, WARNING,
+    BG_APP, BG_CARD, BORDER, PRIMARY, SECONDARY,
     TEXT_PRIMARY, TEXT_MUTED,
     CARD_RADIUS, font,
 )
@@ -66,9 +66,8 @@ class EstadisticasView(QScrollArea):
                 item.widget().deleteLater()
 
         self._chart_linea(0, 0, "Ingresos últimos 30 días")
-        self._chart_dona(0, 1, "Ingresos por portería")
-        self._chart_barras(1, 0, "Distribución por hora del día")
-        self._chart_placeholder(1, 1)
+        self._chart_barras(0, 1, "Distribución por hora del día")
+        self._chart_placeholder(1, 0)
 
     # ── Card contenedor ───────────────────────────────────────────────────────
     def _make_card(self, title: str, row: int, col: int) -> QFrame:
@@ -144,40 +143,7 @@ class EstadisticasView(QScrollArea):
         fig.tight_layout(pad=1.5)
         self._embed(fig, card)
 
-    # ── Gráfica 2: Dona — ingresos por portería ───────────────────────────────
-    def _chart_dona(self, row: int, col: int, title: str):
-        card = self._make_card(title, row, col)
-        try:
-            data = HistorialModel.ingresos_por_porteria()
-        except Exception:
-            data = []
-
-        fig = self._new_fig()
-        ax  = fig.add_subplot(111)
-        ax.set_facecolor(BG_CARD)
-
-        if data:
-            labels  = [r["porteria"] or "Sin portería" for r in data]
-            sizes   = [r["total"] for r in data]
-            palette = [PRIMARY, SECONDARY, WARNING, "#9B7AFF", "#FF8C5C"]
-            colors  = palette[:len(labels)]
-            _, texts, autotexts = ax.pie(
-                sizes, labels=labels, colors=colors,
-                autopct="%1.0f%%", startangle=90,
-                wedgeprops={"linewidth": 2, "edgecolor": BG_CARD},
-                textprops={"color": TEXT_PRIMARY, "fontsize": 8},
-            )
-            for at in autotexts:
-                at.set_color(TEXT_PRIMARY)
-                at.set_fontsize(7)
-        else:
-            ax.text(0.5, 0.5, "Sin datos", ha="center", va="center",
-                    color=TEXT_MUTED, transform=ax.transAxes)
-
-        fig.tight_layout(pad=1.5)
-        self._embed(fig, card)
-
-    # ── Gráfica 3: Barras — ingresos por hora ────────────────────────────────
+    # ── Gráfica 2: Barras — ingresos por hora ────────────────────────────────
     def _chart_barras(self, row: int, col: int, title: str):
         card = self._make_card(title, row, col)
         try:

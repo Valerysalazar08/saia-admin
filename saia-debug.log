@@ -61,3 +61,9 @@
 2026-09-13 17:02:21,386 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=50
 2026-09-13 17:11:10,160 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
 2026-09-13 17:34:06,163 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+2026-09-14 19:26:46,920 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+2026-09-16 08:49:29,607 | INFO | saia | Diagnóstico iniciado. Archivo: C:\Users\Valery\Desktop\SAIA\Escritorio-Admin\saia-admin\saia-debug.log
+2026-09-16 08:50:05,364 | INFO | saia.aprendices | Pestaña seleccionada: saia
+2026-09-16 08:50:05,364 | INFO | saia.aprendices | Iniciando carga: pestaña=saia, búsqueda=''
+2026-09-16 08:50:05,365 | INFO | saia.aprendices | Vista Aprendices creada
+2026-09-16 08:50:05,381 | INFO | saia.aprendices | Carga completada: pestaña=saia, registros=0
