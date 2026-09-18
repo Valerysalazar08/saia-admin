@@ -210,7 +210,9 @@ class DashboardView(QScrollArea):
         self._guardas_body, self._guardas_lay = self._scroll_body(self._guardas_card)
         cl.addWidget(self._guardas_card, stretch=1)
 
-        self._lay.addWidget(cols, stretch=1)
+        # Las listas tienen una altura compacta; no deben estirarse para llenar
+        # todo el espacio vertical de la ventana.
+        self._lay.addWidget(cols)
 
     # ── Helpers ───────────────────────────────────────────────────────────────
     def _list_card(self, title, icon_name, show_ver=False) -> QFrame:
@@ -262,7 +264,7 @@ class DashboardView(QScrollArea):
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
         scroll.setFrameShape(QFrame.Shape.NoFrame)
-        scroll.setFixedHeight(220)
+        scroll.setFixedHeight(150)
         scroll.setStyleSheet(f"""
             QScrollArea {{ background: transparent; border: none; }}
             QScrollBar:vertical {{

@@ -155,11 +155,15 @@ class _DatePickerField(QWidget):
                 border:1px solid {BORDER}; border-radius:10px;
             }}
             QCalendarWidget QToolButton {{
-                color:{TEXT_PRIMARY}; background:#F8FAFC; border:none;
+                color:{TEXT_PRIMARY}; background:transparent; border:none;
                 border-radius:6px; font-weight:bold; font-size:12px;
                 min-height:28px; padding:3px 8px;
             }}
             QCalendarWidget QToolButton:hover {{ background:{BG_HOVER}; }}
+            QCalendarWidget QToolButton#qt_calendar_monthbutton,
+            QCalendarWidget QToolButton#qt_calendar_yearbutton {{
+                background:transparent; margin:0 3px;
+            }}
             QCalendarWidget QToolButton#qt_calendar_prevmonth,
             QCalendarWidget QToolButton#qt_calendar_nextmonth {{
                 min-width:28px; max-width:28px; min-height:28px; max-height:28px;
@@ -172,8 +176,8 @@ class _DatePickerField(QWidget):
                 background:white; alternate-background-color:white;
             }}
             QCalendarWidget QHeaderView::section {{
-                background:#EAF6FF; color:#1677A8; border:none;
-                font-weight:bold; padding:5px 0;
+                background:#D9F0FF; color:#1677A8; border:none;
+                font-weight:bold; padding:6px 0;
             }}
             QCalendarWidget QAbstractItemView {{
                 background:white; color:{TEXT_PRIMARY}; selection-background-color:{PRIMARY};
