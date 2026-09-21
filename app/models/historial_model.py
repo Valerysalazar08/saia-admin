@@ -36,20 +36,36 @@ class HistorialModel:
 
         where_sql = ("WHERE " + " AND ".join(where)) if where else ""
         q = f"""
-            SELECT h.*,
-                   COALESCE(NULLIF(h.porteria, ''), 'Porteria N.2') AS porteria_mostrada,
-                   p.nombres, p.p_ape, p.tip_doc,
-                   pg.nombres AS guarda_nombres, pg.p_ape AS guarda_ape
-            FROM historial h
-            JOIN persona p ON h.num_doc = p.num_doc
-            JOIN personal_seguridad ps ON h.id_guarda = ps.id_guarda
-            JOIN persona pg ON ps.num_doc = pg.num_doc
-            {where_sql}
-            ORDER BY h.fecha_hora_ingreso DESC
+            SELECT * FROM (
+                SELECT h.id_ingreso, h.id_guarda, h.num_doc, h.fecha_hora_ingreso,
+                       NULL AS fecha_hora_salida, 'INGRESO' AS estado_movimiento,
+                       h.observacion, COALESCE(NULLIF(h.porteria, ''), 'Porteria N.2') AS porteria_mostrada,
+                       h.fecha_hora_ingreso AS fecha_evento,
+                       p.nombres, p.p_ape, p.tip_doc,
+                       pg.nombres AS guarda_nombres, pg.p_ape AS guarda_ape
+                FROM historial h
+                JOIN persona p ON h.num_doc = p.num_doc
+                JOIN personal_seguridad ps ON h.id_guarda = ps.id_guarda
+                JOIN persona pg ON ps.num_doc = pg.num_doc
+                {where_sql}
+                UNION ALL
+                SELECT h.id_ingreso, h.id_guarda, h.num_doc, h.fecha_hora_ingreso,
+                       h.fecha_hora_salida, 'SALIDA' AS estado_movimiento,
+                       h.observacion, COALESCE(NULLIF(h.porteria, ''), 'Porteria N.2') AS porteria_mostrada,
+                       h.fecha_hora_salida AS fecha_evento,
+                       p.nombres, p.p_ape, p.tip_doc,
+                       pg.nombres AS guarda_nombres, pg.p_ape AS guarda_ape
+                FROM historial h
+                JOIN persona p ON h.num_doc = p.num_doc
+                JOIN personal_seguridad ps ON h.id_guarda = ps.id_guarda
+                JOIN persona pg ON ps.num_doc = pg.num_doc
+                {where_sql}{' AND ' if where_sql else 'WHERE '}h.fecha_hora_salida IS NOT NULL
+            ) movimientos
+            ORDER BY fecha_evento DESC
             LIMIT %s
         """
-        params.append(limit)
-        return db_saia.fetch_all(q, tuple(params))
+        # Los filtros se aplican en ambos SELECT del UNION (ingresos y salidas).
+        return db_saia.fetch_all(q, tuple(params + params + [limit]))
 
     @staticmethod
     def get_recientes(limit: int = 10) -> list[dict]:

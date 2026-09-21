@@ -5,7 +5,7 @@ import threading
 from PyQt6.QtWidgets import (
     QWidget, QFrame, QLabel, QHBoxLayout, QVBoxLayout,
 )
-from PyQt6.QtCore import QObject, pyqtSignal
+from PyQt6.QtCore import QObject, pyqtSignal, QTimer
 
 from app.ui.theme import (
     BG_APP, BG_CARD, BORDER, PRIMARY, TEXT_PRIMARY, TEXT_MUTED, CARD_RADIUS, font,
@@ -27,6 +27,9 @@ class HistorialView(QWidget):
         self.setStyleSheet(f"background:{BG_APP};")
         self._build()
         self.load_data()
+        self._timer = QTimer(self)
+        self._timer.timeout.connect(self.load_data)
+        self._timer.start(10000)
 
     def _build(self):
         lay = QVBoxLayout(self)
@@ -136,3 +139,7 @@ class HistorialView(QWidget):
         self._status.setText(f"{len(data)} registro(s) encontrado(s)")
 
     def _on_search(self, text): self.load_data(text)
+
+    def closeEvent(self, event):
+        self._timer.stop()
+        super().closeEvent(event)

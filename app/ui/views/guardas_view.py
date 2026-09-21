@@ -249,6 +249,8 @@ class GuardasView(QWidget):
             {"key":"turno",       "header":"Turno",      "width":80},
             {"key":"empresa_seg", "header":"Empresa",    "width":130},
             {"key":"tel",         "header":"Teléfono",   "width":110},
+            {"key":"turno_activo", "header":"Turno activo", "width":112,
+             "renderer":self._render_turno_activo},
             {"key":"cuenta_estado", "header":"Estado",   "width":92,
              "renderer":self._render_estado},
             {"key":"_acc",        "header":"Acciones",   "width":88,
@@ -283,6 +285,12 @@ class GuardasView(QWidget):
         activo = row.get("cuenta_estado") in (1, True, "1")
         return Badge(preset="activo" if activo else "inactivo", parent=parent)
 
+    def _render_turno_activo(self, parent, row, _val):
+        activo = row.get("turno_activo") in (1, True, "1")
+        return Badge(
+            text="En turno" if activo else "Sin turno",
+            preset="activo" if activo else "inactivo", parent=parent)
+
     def load_data(self, search: str = ""):
         sig = _Sig(self); sig.done.connect(self._on_data)
         def fetch():
@@ -305,6 +313,17 @@ class GuardasView(QWidget):
 
     def _confirm_delete(self, row: dict):
         nombre = f"{row.get('nombres','')} {row.get('p_ape','')}".strip()
+        try:
+            if GuardaModel.tiene_turno_activo(row["id_guarda"]):
+                ConfirmModal(
+                    self, "No se puede desactivar",
+                    "No se puede bloquear a este guarda porque tiene un turno activo. Debe finalizarlo antes de desactivar su cuenta.",
+                    confirm_text="Entendido", cancel_text=None,
+                )
+                return
+        except Exception as e:
+            self._show_status(f"Error verificando el turno: {e}", error=True)
+            return
         dlg = ConfirmModal(
             self, "Desactivar guarda",
             f"¿Desactivar la cuenta de {nombre}?\n\n"

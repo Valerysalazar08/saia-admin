@@ -12,7 +12,9 @@ class GuardaModel:
             q = """
                 SELECT ps.*, p.nombres, p.p_ape, p.tip_doc, p.email, p.tel,
                        p.sexo, p.fecha_nac, p.tip_sang,
-                       c.imagen, c.id_cuenta, c.estado AS cuenta_estado
+                       c.imagen, c.id_cuenta, c.estado AS cuenta_estado,
+                       EXISTS(SELECT 1 FROM historial_turno_guarda ht
+                              WHERE ht.id_guarda = ps.id_guarda AND ht.estado = 'ACTIVO') AS turno_activo
                 FROM personal_seguridad ps
                 JOIN persona p ON ps.num_doc = p.num_doc
                 JOIN cuenta c ON p.num_doc = c.num_doc AND c.estado = 1
@@ -24,7 +26,9 @@ class GuardaModel:
         q = """
             SELECT ps.*, p.nombres, p.p_ape, p.tip_doc, p.email, p.tel,
                    p.sexo, p.fecha_nac, p.tip_sang,
-                   c.imagen, c.id_cuenta, c.estado AS cuenta_estado
+                   c.imagen, c.id_cuenta, c.estado AS cuenta_estado,
+                   EXISTS(SELECT 1 FROM historial_turno_guarda ht
+                          WHERE ht.id_guarda = ps.id_guarda AND ht.estado = 'ACTIVO') AS turno_activo
             FROM personal_seguridad ps
             JOIN persona p ON ps.num_doc = p.num_doc
             JOIN cuenta c ON p.num_doc = c.num_doc AND c.estado = 1
@@ -101,6 +105,16 @@ class GuardaModel:
         return db_saia.execute(
             "UPDATE cuenta SET estado=0 WHERE num_doc=%s", (guarda["num_doc"],)
         )
+
+    @staticmethod
+    def tiene_turno_activo(id_guarda: int) -> bool:
+        """Indica si el guarda aún tiene un turno sin finalizar."""
+        row = db_saia.fetch_one(
+            """SELECT 1 FROM historial_turno_guarda
+               WHERE id_guarda=%s AND estado='ACTIVO' LIMIT 1""",
+            (id_guarda,),
+        )
+        return row is not None
 
     @staticmethod
     def delete(id_guarda: int) -> int:

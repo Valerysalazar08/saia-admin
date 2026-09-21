@@ -3,7 +3,7 @@ import logging
 import threading
 from PyQt6.QtWidgets import (
     QWidget, QFrame, QLabel, QPushButton, QVBoxLayout, QHBoxLayout,
-    QScrollArea, QSizePolicy, QMessageBox,
+    QScrollArea, QSizePolicy,
 )
 from PyQt6.QtCore import Qt, QObject, pyqtSignal
 
@@ -211,10 +211,10 @@ class AprendicesView(QWidget):
         nombre = f"{row.get('nombres','')} {row.get('p_ape','')}".strip()
         try:
             if HistorialModel.esta_dentro(row["num_doc"]):
-                QMessageBox.warning(
-                    self,
-                    "No se puede bloquear",
-                    "No se puede bloquear a este aprendiz ya que se encuentra dentro de la institución"
+                ConfirmModal(
+                    self, "No se puede bloquear",
+                    "No se puede bloquear a este aprendiz ya que se encuentra dentro de la institución.",
+                    confirm_text="Entendido", cancel_text=None,
                 )
                 return
         except Exception as e:

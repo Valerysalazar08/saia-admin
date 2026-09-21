@@ -365,9 +365,10 @@ class DashboardView(QScrollArea):
             item.setStyleSheet(f"QFrame{{background:{BG_INPUT};border-radius:8px;border:none;}}")
             rl = QHBoxLayout(item); rl.setContentsMargins(10,6,10,6); rl.setSpacing(8)
 
-            estado = (r.get("estado_movimiento") or "INGRESO").upper()
+            estado = str(r.get("estado_movimiento") or "1").upper()
+            es_ingreso = estado in ("1", "INGRESO")
             dot = QLabel("●"); dot.setFont(font(10, bold=True))
-            dot.setStyleSheet(f"color:{'#42EDB5' if estado=='INGRESO' else WARNING}; background:transparent;")
+            dot.setStyleSheet(f"color:{'#42EDB5' if es_ingreso else WARNING}; background:transparent;")
             dot.setFixedWidth(14); rl.addWidget(dot)
 
             nombre = f"{r.get('nombres','') or ''} {r.get('p_ape','') or ''}".strip()
