@@ -37,6 +37,8 @@ DB_SENA = {
     "autocommit": True,
 }
 
+
+
 # ── Paleta de colores — MODO CLARO ──────────────────────────────────────────────
 # Gradiente principal: #33BEDC (celeste) → #42EDB5 (verde menta)
 COLORS = {
