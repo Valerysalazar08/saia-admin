@@ -24,14 +24,8 @@ from app.ui.molecules.data_table import DataTable
 from app.ui.molecules.modal      import BaseModal, ConfirmModal
 from app.models.guarda_model        import GuardaModel
 from app.models.persona_model       import PersonaModel, CuentaModel
+from app.config.settings            import BACKEND_PERFILES_DIR
 import mysql.connector
-
-# Las tres apps están en el mismo computador: el Escritorio copia las fotos
-# directamente a la carpeta que el Backend expone al Móvil.
-BACKEND_PERFILES_DIR = os.path.abspath(os.path.join(
-    os.path.dirname(__file__),
-    "..", "..", "..", "..", "..", "saia_backend", "uploads", "perfiles"
-))
 
 
 class _Sig(QObject):
@@ -681,6 +675,9 @@ class GuardaFormModal(BaseModal):
 
     def _guardar_foto(self, num_doc: int) -> str | None:
         if not self._foto_path or not os.path.exists(self._foto_path): return None
+        if not str(BACKEND_PERFILES_DIR):
+            self.show_error("Falta configurar BACKEND_PERFILES_DIR en .env.")
+            return None
         try:
             ext = os.path.splitext(self._foto_path)[1].lower()
             nombre = f"perfil_{num_doc}_{int(time.time() * 1000)}{ext}"

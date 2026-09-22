@@ -16,6 +16,10 @@ print("[DEBUG] .env existe:", ENV_FILE.exists())
 print("[DEBUG] DB_SAIA_PORT:", repr(os.getenv("DB_SAIA_PORT")))
 print("[DEBUG] DB_SAIA_PASSWORD:", repr(os.getenv("DB_SAIA_PASSWORD")))
 
+# Ubicación física de las fotos que el backend expone a la app móvil.
+# Se configura en .env porque Admin y Backend pueden ser proyectos separados.
+BACKEND_PERFILES_DIR = os.getenv("BACKEND_PERFILES_DIR", "").strip()
+
 # ── Base de datos ───────────────────────────────────────────────────────────────
 DB_SAIA = {
     "host":     os.getenv("DB_SAIA_HOST", "127.0.0.1"),
