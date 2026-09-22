@@ -675,17 +675,22 @@ class GuardaFormModal(BaseModal):
 
     def _guardar_foto(self, num_doc: int) -> str | None:
         if not self._foto_path or not os.path.exists(self._foto_path): return None
-        if not str(BACKEND_PERFILES_DIR):
+        destino = str(BACKEND_PERFILES_DIR).strip()
+        if not destino:
             self.show_error("Falta configurar BACKEND_PERFILES_DIR en .env.")
             return None
         try:
             ext = os.path.splitext(self._foto_path)[1].lower()
             nombre = f"perfil_{num_doc}_{int(time.time() * 1000)}{ext}"
-            os.makedirs(BACKEND_PERFILES_DIR, exist_ok=True)
-            shutil.copy2(self._foto_path, os.path.join(BACKEND_PERFILES_DIR, nombre))
+            os.makedirs(destino, exist_ok=True)
+            destino_foto = os.path.join(destino, nombre)
+            shutil.copy2(self._foto_path, destino_foto)
+            if not os.path.isfile(destino_foto):
+                raise OSError("El archivo no quedó disponible después de copiarse.")
             return f"/uploads/perfiles/{nombre}"
         except Exception as e:
             print(f"[Guardas] Error copiando foto: {e}")
+            self.show_error(f"No se pudo copiar la foto a: {destino}\nDetalle: {e}")
         return None
 
 
