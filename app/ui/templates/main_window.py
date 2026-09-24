@@ -1,7 +1,4 @@
-"""
-TEMPLATE Qt — Ventana principal post-login.
-Shell: Sidebar izquierdo + Header + área de contenido intercambiable.
-"""
+
 from PyQt6.QtWidgets import (
     QWidget, QFrame, QLabel, QHBoxLayout, QVBoxLayout,
     QStackedWidget,
@@ -29,10 +26,6 @@ VIEW_TITLES = {
 
 
 class MainWindow(QWidget):
-    """
-    Frame principal post-login.
-    on_logout se llama cuando el usuario cierra sesión.
-    """
 
     def __init__(self, parent=None, user_data: dict = None, on_logout=None):
         super().__init__(parent)
@@ -46,9 +39,6 @@ class MainWindow(QWidget):
         self._build()
         self._navigate("dashboard")
 
-    # ─────────────────────────────────────────────────────────────────────────
-    # Construcción del shell
-    # ─────────────────────────────────────────────────────────────────────────
 
     def _build(self):
         nombre = (
@@ -83,10 +73,6 @@ class MainWindow(QWidget):
 
         root.addWidget(right, stretch=1)
 
-    # ─────────────────────────────────────────────────────────────────────────
-    # Navegación
-    # ─────────────────────────────────────────────────────────────────────────
-
     def _navigate(self, view_id: str):
         if view_id == "logout":
             self._do_logout()
@@ -98,7 +84,6 @@ class MainWindow(QWidget):
             self.refresh_view(view_id)
             return
 
-        # Crear vista si no existe
         is_cached = view_id in self._view_cache
         if not is_cached:
             view = self._create_view(view_id)
@@ -122,7 +107,6 @@ class MainWindow(QWidget):
             refresh()
 
     def _create_view(self, view_id: str) -> QWidget | None:
-        """Importa y crea la vista bajo demanda (lazy loading)."""
         try:
             if view_id == "dashboard":
                 from app.ui.views.dashboard_view import DashboardView
@@ -175,9 +159,6 @@ class MainWindow(QWidget):
         lay.addWidget(lbl)
         return w
 
-    # ─────────────────────────────────────────────────────────────────────────
-    # Callbacks
-    # ─────────────────────────────────────────────────────────────────────────
 
     def _on_profile_update(self, nuevos_datos: dict):
         self._user.update(nuevos_datos)

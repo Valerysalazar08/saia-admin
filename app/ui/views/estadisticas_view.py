@@ -1,15 +1,10 @@
-"""
-VISTA Qt — Estadísticas con gráficas matplotlib embebidas.
-IMPORTANTE: usar backend Agg (off-screen) + FigureCanvasQTAgg.
-NO usar plt.* (pyplot) — provoca ventanas emergentes en Qt.
-"""
+
 from PyQt6.QtWidgets import (
     QWidget, QFrame, QLabel, QScrollArea,
     QVBoxLayout, QHBoxLayout, QGridLayout,
 )
 from PyQt6.QtCore import Qt
 
-# Backend off-screen — forzado desde main.py antes de todo
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
 
@@ -69,7 +64,7 @@ class EstadisticasView(QScrollArea):
         self._chart_barras(0, 1, "Distribución por hora del día")
         self._chart_placeholder(1, 0)
 
-    # ── Card contenedor ───────────────────────────────────────────────────────
+    # Card contenedor 
     def _make_card(self, title: str, row: int, col: int) -> QFrame:
         card = QFrame()
         card.setStyleSheet(f"""
@@ -112,7 +107,7 @@ class EstadisticasView(QScrollArea):
         canvas.setMinimumHeight(260)
         card.layout().addWidget(canvas)
 
-    # ── Gráfica 1: Línea — ingresos por día ──────────────────────────────────
+    # Gráfica 1: ingresos por día 
     def _chart_linea(self, row: int, col: int, title: str):
         card = self._make_card(title, row, col)
         try:
@@ -143,7 +138,7 @@ class EstadisticasView(QScrollArea):
         fig.tight_layout(pad=1.5)
         self._embed(fig, card)
 
-    # ── Gráfica 2: Barras — ingresos por hora ────────────────────────────────
+    # Gráfica 2: ingresos por hora
     def _chart_barras(self, row: int, col: int, title: str):
         card = self._make_card(title, row, col)
         try:
@@ -174,7 +169,7 @@ class EstadisticasView(QScrollArea):
         fig.tight_layout(pad=1.5)
         self._embed(fig, card)
 
-    # ── Gráfica 4: Placeholder ────────────────────────────────────────────────
+    # Gráfica 4: Placeholder
     def _chart_placeholder(self, row: int, col: int):
         card = self._make_card("Más métricas próximamente", row, col)
         lbl = QLabel("📊\n\nAquí se mostrarán más gráficas\ncuando haya datos suficientes.")

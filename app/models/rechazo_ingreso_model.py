@@ -1,11 +1,9 @@
-"""Consultas y gestión de rechazos de ingreso registrados por guardas."""
 from app.config.database import db_saia
 
 
 class RechazoIngresoModel:
     @staticmethod
     def asegurar_campos_gestion():
-        """Añade los campos de gestión a instalaciones creadas con el esquema anterior."""
         campos = {
             "estado_gestion": "VARCHAR(20) NOT NULL DEFAULT 'PENDIENTE'",
             "comentario_gestion": "TEXT NULL",

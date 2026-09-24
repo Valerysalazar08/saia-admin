@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-# ── Rutas base ─────────────────────────────────────────────────────────────────
+#  Rutas base 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 ENV_FILE = ROOT_DIR / ".env"
 load_dotenv(ENV_FILE)
@@ -20,7 +20,7 @@ print("[DEBUG] DB_SAIA_PASSWORD:", repr(os.getenv("DB_SAIA_PASSWORD")))
 # Se configura en .env porque Admin y Backend pueden ser proyectos separados.
 BACKEND_PERFILES_DIR = os.getenv("BACKEND_PERFILES_DIR", "").strip()
 
-# ── Base de datos ───────────────────────────────────────────────────────────────
+#  Base de datos 
 DB_SAIA = {
     "host":     os.getenv("DB_SAIA_HOST", "127.0.0.1"),
     "port":     int(os.getenv("DB_SAIA_PORT", "3307")),
@@ -43,7 +43,7 @@ DB_SENA = {
 
 
 
-# ── Paleta de colores — MODO CLARO ──────────────────────────────────────────────
+#  Paleta de colores 
 # Gradiente principal: #33BEDC (celeste) → #42EDB5 (verde menta)
 COLORS = {
     # Primarios
@@ -103,7 +103,7 @@ COLORS = {
     "table_border":     "#F3F4F6",
 }
 
-# ── Tipografía — Work Sans ──────────────────────────────────────────────────────
+# Tipografía — Work Sans 
 # Work Sans no viene con Windows, se usa Segoe UI como fallback
 FONTS = {
     "family":        "Segoe UI",       # fallback; en el código intentamos Work Sans
@@ -125,7 +125,7 @@ FONTS = {
     "nav_item_bold": ("Segoe UI", 13, "bold"),
 }
 
-# ── Dimensiones ─────────────────────────────────────────────────────────────────
+# Dimensiones 
 SIZES = {
     "window_width":      1280,
     "window_height":     780,
@@ -156,7 +156,7 @@ SIZES = {
     "table_header_height": 40,
 }
 
-# ── Información de la app ───────────────────────────────────────────────────────
+#  Información de la app 
 APP = {
     "name":          "SAIA Admin",
     "version":       "1.0.0",
@@ -166,7 +166,7 @@ APP = {
     "exports_dir":   str(ROOT_DIR / "exports"),
 }
 
-# Único administrador autorizado para administrar cuentas administradoras.
+# Superadministrador
 SUPERADMIN_DOC = 71654321
 
 

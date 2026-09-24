@@ -1,8 +1,4 @@
-"""
-Modelo para aprendices.
-Consulta la BD sena (solo lectura) para validar si existe como aprendiz activo,
-y la BD saia para los datos de cuenta/persona.
-"""
+
 from app.config.database import db_saia, db_sena
 
 

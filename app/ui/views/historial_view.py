@@ -1,6 +1,4 @@
-"""
-VISTA Qt — Historial de ingresos con filtros de fecha.
-"""
+
 import threading
 from PyQt6.QtWidgets import (
     QWidget, QFrame, QLabel, QHBoxLayout, QVBoxLayout,
@@ -36,7 +34,6 @@ class HistorialView(QWidget):
         lay.setContentsMargins(24, 20, 24, 8)
         lay.setSpacing(0)
 
-        # Toolbar
         tb = QWidget(); tb.setStyleSheet("background:transparent;")
         tbl = QHBoxLayout(tb); tbl.setContentsMargins(0,0,0,0)
         tbl.addWidget(Heading("Historial de Ingresos", level=2), stretch=1)

@@ -71,7 +71,7 @@ class AjustesView(QScrollArea):
         self._build_password_card()
         self._lay.addStretch()
 
-    # ── Card datos personales ─────────────────────────────────────────────────
+   
     def _build_personal_card(self):
         card, inner = self._make_card("Datos personales", "user")
 
@@ -101,8 +101,6 @@ class AjustesView(QScrollArea):
         self._tip_doc_dd = Dropdown(TIPOS_DOC, width=200)
         self._tip_doc_dd.setEnabled(False)
         tdl.addWidget(self._tip_doc_dd)
-        # Reserva el mismo espacio para validación que usa LabeledInput a la
-        # derecha, evitando que los dos campos de la fila queden desfasados.
         tdl.addSpacing(14)
         gl.addWidget(td_w, 0, 0)
 
@@ -157,7 +155,7 @@ class AjustesView(QScrollArea):
         fbl.addWidget(save)
         inner.layout().addWidget(fb)
 
-    # ── Card contraseña ───────────────────────────────────────────────────────
+    # Card contraseña 
     def _build_password_card(self):
         card, inner = self._make_card("Seguridad — Cambiar contraseña", "shield")
 
@@ -190,7 +188,7 @@ class AjustesView(QScrollArea):
         fb2l.addWidget(save2)
         inner.layout().addWidget(fb2)
 
-    # ── Helper tarjeta ────────────────────────────────────────────────────────
+    
     def _icon_badge(self, icon_name: str) -> QLabel:
         badge = QLabel()
         badge.setFixedSize(44, 44)
@@ -200,7 +198,6 @@ class AjustesView(QScrollArea):
         return badge
 
     def _action_button(self, text: str, callback) -> QPushButton:
-        """Acción principal sobria para los pies de las tarjetas de ajustes."""
         button = QPushButton(text)
         button.setFixedHeight(40)
         button.setMinimumWidth(174)
@@ -254,7 +251,7 @@ class AjustesView(QScrollArea):
         self._lay.addWidget(card)
         return card, inner
 
-    # ── Cargar perfil ─────────────────────────────────────────────────────────
+
     def _load_profile(self):
         num_doc = self._user.get("num_doc")
         if not num_doc: return
@@ -284,7 +281,7 @@ class AjustesView(QScrollArea):
         except Exception as e:
             self._show_status(self._status_personal, f"Error: {e}", error=True)
 
-    # ── Guardar ───────────────────────────────────────────────────────────────
+
     def _save_personal(self):
         nombres   = self._nombres.get().strip()
         apellidos = self._apellidos.get().strip()
@@ -354,8 +351,6 @@ class AjustesView(QScrollArea):
             f"color:{ERROR if error else SUCCESS_TEXT}; background:transparent;")
         lbl.setText(text)
         def clear_status():
-            # La vista puede destruirse al cerrar sesión antes de que venza el
-            # temporizador; en ese caso el QLabel ya no es válido.
             try:
                 lbl.setText("")
                 lbl.setStyleSheet(f"color:{TEXT_MUTED}; background:transparent;")

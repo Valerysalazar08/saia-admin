@@ -13,7 +13,7 @@ import logging
 import ctypes
 from pathlib import Path
 
-# Forzar matplotlib a backend off-screen ANTES de cualquier import
+
 import matplotlib
 matplotlib.use("Agg")
 
@@ -21,7 +21,7 @@ matplotlib.use("Agg")
 os.environ["QT_SCALE_FACTOR"] = "1"
 os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "0"
 
-# ── 1. BD primero — antes de cualquier import Qt ─────────────────────────────
+
 from app.config.database import db_saia, db_sena
 from app.config.settings import APP
 
@@ -32,10 +32,6 @@ def configure_diagnostics():
     logging.basicConfig(
         level=logging.WARNING,
         format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
-        handlers=[
-            logging.StreamHandler(sys.stdout),
-            logging.FileHandler(log_path, encoding="utf-8"),
-        ],
     )
 
     def uncaught_exception(exc_type, exc_value, exc_traceback):
@@ -45,10 +41,7 @@ def configure_diagnostics():
 
     sys.excepthook = uncaught_exception
     logging.getLogger("saia").setLevel(logging.INFO)
-    # Matplotlib solo se usa para gráficas; sus mensajes internos de categorías
-    # no son errores de la aplicación ni ayudan a depurar la navegación.
     logging.getLogger("matplotlib").setLevel(logging.WARNING)
-    logging.getLogger("saia").info("Diagnóstico iniciado. Archivo: %s", log_path)
 
 
 def check_connections() -> bool:
@@ -67,20 +60,18 @@ def check_connections() -> bool:
 
 if __name__ == "__main__":
     configure_diagnostics()
-    # Evita que Windows agrupe la app bajo el icono de Anaconda/Python cuando
-    # se ejecuta desde ese intérprete; SAIA conserva su propia identidad visual.
     if sys.platform == "win32":
         try:
             ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(
                 "SENA.SAIA.Admin")
         except Exception:
             pass
-    # ── 2. Verificar BD antes de levantar Qt ─────────────────────────────────
+  
     if not check_connections():
         print("\n[SAIA] La aplicación no puede iniciar sin conexión a la BD.")
         sys.exit(1)
 
-    # ── 3. Crear QApplication ANTES de cualquier widget o import Qt ──────────
+
     from PyQt6.QtWidgets import QApplication, QToolTip
     from PyQt6.QtCore import qInstallMessageHandler, QtMsgType
     from PyQt6.QtGui import QColor, QPalette
@@ -95,8 +86,7 @@ if __name__ == "__main__":
 
     qInstallMessageHandler(qt_message_handler)
 
-    # En Windows algunos temas del sistema ignoran parcialmente el stylesheet
-    # de los tooltips y los muestran negros. Forzamos su paleta clara.
+
     tooltip_palette = QToolTip.palette()
     for color_group in (QPalette.ColorGroup.Active,
                         QPalette.ColorGroup.Inactive,
@@ -107,7 +97,7 @@ if __name__ == "__main__":
             color_group, QPalette.ColorRole.ToolTipText, QColor("#1A1A2E"))
     QToolTip.setPalette(tooltip_palette)
 
-    # Scrollbars delgados y modernos en toda la app
+
     app.setStyleSheet(f"""
         QScrollBar:vertical {{
             background: transparent;
@@ -155,13 +145,13 @@ if __name__ == "__main__":
         }}
     """)
 
-    # ── 4. Recién ahora importar módulos que usan Qt ──────────────────────────
+
     from PyQt6.QtWidgets import QWidget, QVBoxLayout
     from PyQt6.QtGui import QIcon
     from app.ui.theme import LOGO_GRADIENT, BG_APP
     from app.ui.views.login_view import LoginView
 
-    # ── 5. Inicializar tabla de auditoría si no existe ────────────────────────
+
     try:
         from app.models.auditoria_model import AuditoriaModel
         if not AuditoriaModel.table_exists():
@@ -170,7 +160,7 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"[SAIA] Advertencia BD: {e}")
 
-    # ── 6. Ventana raíz ───────────────────────────────────────────────────────
+
     win = QWidget()
     win.setWindowTitle(f"{APP['name']} — {APP['full_name']}")
     win.setMinimumSize(1024, 640)

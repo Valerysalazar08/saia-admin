@@ -1,6 +1,4 @@
-"""
-Modelo para personal_seguridad, historial_turno_guarda en BD saia.
-"""
+
 from app.config.database import db_saia
 
 
@@ -135,7 +133,7 @@ class GuardaModel:
         """)
         return row["total"] if row else 0
 
-    # ── Turnos ──────────────────────────────────────────────────────────────────
+    # Turnos 
 
     @staticmethod
     def get_turnos(id_guarda: int = None, limit: int = 50) -> list[dict]:

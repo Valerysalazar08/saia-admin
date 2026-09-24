@@ -1,6 +1,4 @@
-"""
-Modelo para historial de ingresos/salidas de aprendices en BD saia.
-"""
+
 from app.config.database import db_saia
 
 
@@ -64,7 +62,6 @@ class HistorialModel:
             ORDER BY fecha_evento DESC
             LIMIT %s
         """
-        # Los filtros se aplican en ambos SELECT del UNION (ingresos y salidas).
         return db_saia.fetch_all(q, tuple(params + params + [limit]))
 
     @staticmethod

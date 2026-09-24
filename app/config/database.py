@@ -1,7 +1,4 @@
-"""
-Gestión de conexiones a las dos bases de datos: saia y sena.
-Implementa pool de conexiones simple con reconexión automática.
-"""
+
 import mysql.connector
 from mysql.connector import Error, pooling
 from contextlib import contextmanager
@@ -9,7 +6,6 @@ from app.config.settings import DB_SAIA, DB_SENA
 
 
 class DatabaseManager:
-    """Maneja la conexión y operaciones sobre una base de datos MySQL."""
 
     def __init__(self, config: dict, pool_name: str, pool_size: int = 5):
         self._config = config
@@ -19,7 +15,6 @@ class DatabaseManager:
         self._init_pool()
 
     def _init_pool(self):
-        """Inicializa el pool de conexiones."""
         try:
             pool_config = {**self._config, "pool_name": self._pool_name, "pool_size": self._pool_size}
             self._pool = pooling.MySQLConnectionPool(**pool_config)
@@ -28,7 +23,6 @@ class DatabaseManager:
             self._pool = None
 
     def get_connection(self):
-        """Obtiene una conexión del pool. Reintenta una vez si falla."""
         if self._pool is None:
             self._init_pool()
         try:
@@ -41,7 +35,6 @@ class DatabaseManager:
 
     @contextmanager
     def cursor(self, dictionary: bool = True):
-        """Context manager que entrega un cursor y cierra todo limpiamente."""
         conn = self.get_connection()
         cur = conn.cursor(dictionary=dictionary, buffered=True)
         try:
@@ -55,7 +48,6 @@ class DatabaseManager:
             conn.close()
 
     def execute(self, query: str, params: tuple = None) -> int:
-        """Ejecuta INSERT/UPDATE/DELETE. Retorna lastrowid o rowcount."""
         with self.cursor() as cur:
             cur.execute(query, params or ())
             return cur.lastrowid if cur.lastrowid else cur.rowcount
@@ -67,13 +59,11 @@ class DatabaseManager:
             return cur.fetchone()
 
     def fetch_all(self, query: str, params: tuple = None) -> list[dict]:
-        """Ejecuta SELECT y retorna todas las filas como lista de dicts."""
         with self.cursor() as cur:
             cur.execute(query, params or ())
             return cur.fetchall()
 
     def test_connection(self) -> bool:
-        """Verifica que la conexión funcione."""
         try:
             with self.cursor() as cur:
                 cur.execute("SELECT 1")
@@ -82,6 +72,5 @@ class DatabaseManager:
             print(f"[DB] Error de conexión ({self._pool_name}): {e}")
             return False
 
-# ── Instancias globales ─────────────────────────────────────────────────────────
 db_saia = DatabaseManager(DB_SAIA, pool_name="saia_pool", pool_size=5)
 db_sena = DatabaseManager(DB_SENA, pool_name="sena_pool", pool_size=3)

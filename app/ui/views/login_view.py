@@ -1,7 +1,4 @@
-"""
-VISTA Qt — Login. Diseño SAIA con círculos decorativos, tarjeta flotante
-con sombra real y botón gradiente.
-"""
+
 import sys
 from PyQt6.QtWidgets import (
     QWidget, QFrame, QLabel, QPushButton, QLineEdit,
@@ -27,9 +24,6 @@ _DOT    = "#C8F5E6"
 _ACCOUNT_ICON = ICONS_DIR / "cuenta.png"
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Worker de autenticación (hilo separado)
-# ─────────────────────────────────────────────────────────────────────────────
 
 class _LoginWorker(QThread):
     success = pyqtSignal(dict)
@@ -86,10 +80,6 @@ class _LoginWorker(QThread):
 
         self.success.emit(user)
 
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Input con icono SVG izquierdo
-# ─────────────────────────────────────────────────────────────────────────────
 
 class _IconInput(QFrame):
     _SS_N = ""   # normal
@@ -177,9 +167,8 @@ class _IconInput(QFrame):
     def clear_error(self):  self._has_error = False; self.setStyleSheet(_IconInput._SS_N)
 
 
-# ─────────────────────────────────────────────────────────────────────────────
+
 # Botón gradiente
-# ─────────────────────────────────────────────────────────────────────────────
 
 class _GradBtn(QPushButton):
     def __init__(self, text: str, parent=None):
@@ -202,9 +191,8 @@ class _GradBtn(QPushButton):
         p.drawText(self.rect(), Qt.AlignmentFlag.AlignCenter, self.text())
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Vista de Login
-# ─────────────────────────────────────────────────────────────────────────────
+
 
 class LoginView(QWidget):
     """Pantalla de inicio de sesión con diseño SAIA completo."""
@@ -215,7 +203,7 @@ class LoginView(QWidget):
         self._worker   = None
         self._build()
 
-    # ── Fondo con círculos ────────────────────────────────────────────────────
+    # Fondo con círculos 
     def paintEvent(self, event):
         p = QPainter(self)
         p.setRenderHint(QPainter.RenderHint.Antialiasing)
@@ -246,14 +234,11 @@ class LoginView(QWidget):
             self._footer.setGeometry(
                 0, self.height() - 36, self.width(), 36)
 
-    # ── Layout principal ──────────────────────────────────────────────────────
     def _build(self):
         root = QHBoxLayout(self)
         root.setContentsMargins(0, 0, 0, 0)
         root.setSpacing(0)
 
-        # El contenido vive en un bloque central: así las dos columnas mantienen
-        # una relación consistente tanto en pantallas grandes como medianas.
         container = QWidget()
         container.setMaximumWidth(1150)
         container.setStyleSheet("background:transparent;")
@@ -286,7 +271,7 @@ class LoginView(QWidget):
         root.addWidget(container)
         root.addStretch(1)
 
-        # Footer flotante
+        # Footer 
         footer = QWidget(self)
         footer.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         fl = QHBoxLayout(footer)
@@ -303,7 +288,7 @@ class LoginView(QWidget):
         self._footer = footer
         footer.setGeometry(0, self.height() - 36, self.width(), 36)
 
-    # ── Panel izquierdo ───────────────────────────────────────────────────────
+    #  Panel izquierdo 
     def _make_left(self) -> QWidget:
         w = QWidget()
         w.setStyleSheet("background:transparent;")
@@ -407,7 +392,7 @@ class LoginView(QWidget):
         h.addStretch()
         return row
 
-    # ── Tarjeta del formulario ────────────────────────────────────────────────
+    # Tarjeta del formulario 
     def _make_card(self) -> QFrame:
         card = QFrame()
         card.setFixedWidth(430)
@@ -428,7 +413,6 @@ class LoginView(QWidget):
         lay.setContentsMargins(38, 32, 38, 32)
         lay.setSpacing(0)
 
-        # Icono de cuenta específico para el formulario, sin repetir el logo.
         account_icon = QLabel()
         account_icon.setStyleSheet("background:transparent;")
         if _ACCOUNT_ICON.exists():
@@ -466,7 +450,7 @@ class LoginView(QWidget):
         lay.addLayout(line_row)
         lay.addSpacing(18)
 
-        # — Documento —
+        # Documento 
         doc_lbl = QLabel("Número de documento")
         doc_lbl.setFont(font(11, bold=True))
         doc_lbl.setStyleSheet(
@@ -481,7 +465,7 @@ class LoginView(QWidget):
             lambda: self._pwd.edit.setFocus())
         lay.addSpacing(14)
 
-        # — Contraseña —
+        #  Contraseña 
         pwd_lbl = QLabel("Contraseña")
         pwd_lbl.setFont(font(11, bold=True))
         pwd_lbl.setStyleSheet(
@@ -495,7 +479,7 @@ class LoginView(QWidget):
         self._pwd.edit.returnPressed.connect(self._do_login)
         lay.addSpacing(6)
 
-        # — Mensaje de error/info —
+        #  Mensaje de error/info 
         self._err = QLabel("")
         self._err.setFont(font(10))
         self._err.setStyleSheet(
@@ -505,13 +489,12 @@ class LoginView(QWidget):
         lay.addWidget(self._err)
         lay.addSpacing(10)
 
-        # — Botón ingresar —
+        #  Botón ingresar 
         self._btn = _GradBtn("Ingresar  →")
         self._btn.clicked.connect(self._do_login)
         lay.addWidget(self._btn)
         return card
 
-    # ── Lógica de login ───────────────────────────────────────────────────────
     def _do_login(self):
         doc = self._doc.text().strip()
         pwd = self._pwd.text()

@@ -1,6 +1,4 @@
-"""
-ÁTOMOS Qt — Inputs, búsqueda, dropdowns y labeled inputs.
-"""
+
 from PyQt6.QtWidgets import (
     QWidget, QFrame, QLineEdit, QLabel, QHBoxLayout, QVBoxLayout,
     QPushButton, QComboBox, QSizePolicy,
@@ -16,9 +14,6 @@ from app.ui.theme import (
 )
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Stylesheets helpers
-# ─────────────────────────────────────────────────────────────────────────────
 
 def _frame_ss(border: str) -> str:
     return (
@@ -46,9 +41,6 @@ _ENTRY_SS = f"""
 """
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# TextInput
-# ─────────────────────────────────────────────────────────────────────────────
 
 class TextInput(QFrame):
     """Campo de texto estilizado con borde que resalta al enfocar."""
@@ -74,7 +66,6 @@ class TextInput(QFrame):
 
         self._has_error = False
 
-    # ── event filter para foco ───────────────────────────────────────────────
     def eventFilter(self, obj, event):
         if obj is self._edit:
             if event.type() == QEvent.Type.FocusIn:
@@ -85,7 +76,6 @@ class TextInput(QFrame):
                     self.setStyleSheet(_SS_NORMAL)
         return super().eventFilter(obj, event)
 
-    # ── API pública ──────────────────────────────────────────────────────────
     def text(self) -> str:
         return self._edit.text()
 
@@ -118,9 +108,6 @@ class TextInput(QFrame):
         return self._edit
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# PasswordInput
-# ─────────────────────────────────────────────────────────────────────────────
 
 class PasswordInput(QFrame):
     """Campo de contraseña con botón ojo."""
@@ -202,9 +189,6 @@ class PasswordInput(QFrame):
         return self._edit
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# SearchInput
-# ─────────────────────────────────────────────────────────────────────────────
 
 class SearchInput(QFrame):
     """Campo de búsqueda con icono de lupa."""
@@ -250,9 +234,6 @@ class SearchInput(QFrame):
     def clear(self):       self._edit.clear()
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Dropdown
-# ─────────────────────────────────────────────────────────────────────────────
 
 class Dropdown(QComboBox):
     """QComboBox estilizado con la paleta SAIA."""
@@ -315,9 +296,6 @@ class Dropdown(QComboBox):
         self.set(current)
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# LabeledInput
-# ─────────────────────────────────────────────────────────────────────────────
 
 class LabeledInput(QWidget):
     """Label + Input + error message, apilados verticalmente."""
@@ -351,7 +329,6 @@ class LabeledInput(QWidget):
         self._err.setFixedHeight(14)
         lay.addWidget(self._err)
 
-    # ── API pública ──────────────────────────────────────────────────────────
 
     def get(self) -> str:
         return self._input.get()
@@ -376,5 +353,4 @@ class LabeledInput(QWidget):
         return self._input.entry
 
     def set_editable(self, editable: bool):
-        """Habilita o bloquea el campo sin deshabilitar su etiqueta."""
         self._input.setEnabled(editable)

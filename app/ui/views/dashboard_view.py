@@ -1,6 +1,4 @@
-"""
-VISTA Qt — Dashboard principal.
-"""
+
 import threading
 from PyQt6.QtWidgets import (
     QWidget, QFrame, QLabel, QPushButton,
@@ -37,9 +35,7 @@ def _shadow(widget, blur=20, offset=4, alpha=18):
     widget.setGraphicsEffect(fx)
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Stat Card — igual al mockup: icono arriba, número grande, label pequeño
-# ─────────────────────────────────────────────────────────────────────────────
+
 class _StatCard(QFrame):
     def __init__(self, title, value=0, icon_name="", color=PRIMARY):
         super().__init__()
@@ -76,7 +72,6 @@ class _StatCard(QFrame):
         bl.setContentsMargins(16, 12, 16, 14)
         bl.setSpacing(4)
 
-        # Icono cuadrado pequeño
         if icon_name:
             ic_box = QFrame()
             ic_box.setFixedSize(32, 32)
@@ -114,7 +109,6 @@ class _StatCard(QFrame):
         self._val.setText(str(v))
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 class DashboardView(QScrollArea):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -144,7 +138,6 @@ class DashboardView(QScrollArea):
         self.refresh()
 
     def _build(self):
-        # ── Header interno ────────────────────────────────────────────────────
         top = QWidget(); top.setStyleSheet("background: transparent;")
         tl  = QHBoxLayout(top); tl.setContentsMargins(0, 0, 0, 0)
 
@@ -166,7 +159,6 @@ class DashboardView(QScrollArea):
         sub.setContentsMargins(0, 4, 0, 20)
         self._lay.addWidget(sub)
 
-        # ── Fila 1: 3 tarjetas ────────────────────────────────────────────────
         row1 = QWidget(); row1.setStyleSheet("background: transparent;")
         r1l  = QHBoxLayout(row1); r1l.setContentsMargins(0,0,0,0); r1l.setSpacing(12)
 
@@ -182,7 +174,6 @@ class DashboardView(QScrollArea):
         self._lay.addWidget(row1)
         self._lay.addSpacing(12)
 
-        # ── Fila 2: 3 tarjetas ────────────────────────────────────────────────
         row2 = QWidget(); row2.setStyleSheet("background: transparent;")
         r2l  = QHBoxLayout(row2); r2l.setContentsMargins(0,0,0,0); r2l.setSpacing(12)
 
@@ -198,7 +189,6 @@ class DashboardView(QScrollArea):
         self._lay.addWidget(div)
         self._lay.addSpacing(14)
 
-        # ── Dos columnas: recientes + guardas ─────────────────────────────────
         cols = QWidget(); cols.setStyleSheet("background: transparent;")
         cl   = QHBoxLayout(cols); cl.setContentsMargins(0,0,0,0); cl.setSpacing(16)
 
@@ -214,7 +204,6 @@ class DashboardView(QScrollArea):
         # todo el espacio vertical de la ventana.
         self._lay.addWidget(cols)
 
-    # ── Helpers ───────────────────────────────────────────────────────────────
     def _list_card(self, title, icon_name, show_ver=False) -> QFrame:
         card = QFrame()
         card.setStyleSheet(f"""
@@ -300,7 +289,6 @@ class DashboardView(QScrollArea):
         card.layout().addWidget(scroll)
         return body, bl
 
-    # ── Fetch & render ────────────────────────────────────────────────────────
     def refresh(self):
         threading.Thread(target=self._fetch_all, daemon=True).start()
 
@@ -416,6 +404,5 @@ class DashboardView(QScrollArea):
         self._timer.stop(); super().closeEvent(event)
 
     # MainWindow utiliza load_data para refrescar las vistas que tiene en caché.
-    # Exponer este alias hace que Inicio se refresque también al volver a él.
     def load_data(self):
         self.refresh()

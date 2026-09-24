@@ -1,6 +1,4 @@
-"""
-VISTA Qt — CRUD completo de guardas de seguridad.
-"""
+
 import re, os, shutil, time, threading
 from datetime import date
 from PyQt6.QtWidgets import (
@@ -33,7 +31,6 @@ class _Sig(QObject):
 
 
 class _CircularPhoto(QFrame):
-    """Foto circular con recorte centrado y borde antialias, sin QBitmap."""
 
     SIZE = 110
 
@@ -267,8 +264,6 @@ class GuardasView(QWidget):
         e.clicked.connect(lambda: self._open_edit(row))
         h.addWidget(e)
 
-        # Una cuenta ya inactiva se habilita únicamente desde Bloqueados;
-        # no se ofrece una desactivación repetida en la lista principal.
         if row.get("cuenta_estado") in (1, True, "1"):
             d = TableActionButton("ban", "Desactivar guarda", color="danger")
             d.clicked.connect(lambda: self._confirm_delete(row))
@@ -393,7 +388,7 @@ class GuardaFormModal(BaseModal):
         def ins(w):
             lay.insertWidget(lay.count()-1, w)
 
-        # ── Avatar ────────────────────────────────────────────────────────────
+        # Avatar 
         av = QWidget(); av.setStyleSheet("background:transparent;")
         avl = QVBoxLayout(av); avl.setContentsMargins(0,0,0,0); avl.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
@@ -420,7 +415,7 @@ class GuardaFormModal(BaseModal):
         ins(av)
         ins(self._hsep())
 
-        # ── Datos personales ──────────────────────────────────────────────────
+        #  Datos personales 
         ins(self._sec_label("Datos personales"))
 
         r1 = self._row2()
@@ -450,8 +445,7 @@ class GuardaFormModal(BaseModal):
         r2.layout().addWidget(self._nombres); r2.layout().addWidget(self._apellidos)
         ins(r2)
 
-        # Cada fila mantiene exactamente dos campos del mismo ancho.
-        # Tipo de sangre deja de ocupar toda la fila y queda junto a email.
+ 
         sang_w = QWidget(); sang_w.setStyleSheet("background:transparent;")
         sang_w.setFixedWidth(self.PAIR_FIELD_WIDTH)
         sgl    = QVBoxLayout(sang_w); sgl.setContentsMargins(0,0,0,0); sgl.setSpacing(4)
@@ -489,7 +483,7 @@ class GuardaFormModal(BaseModal):
         sexo_row.layout().addStretch()
         ins(sexo_row)
 
-        # ── Info seguridad ────────────────────────────────────────────────────
+        # Info seguridad 
         ins(self._sec_label("Información de seguridad"))
 
         self._empresa = LabeledInput("Empresa de seguridad", required=True, width=200)
@@ -510,7 +504,6 @@ class GuardaFormModal(BaseModal):
         else:
             self._pwd = None
 
-    # ── Helpers UI ────────────────────────────────────────────────────────────
     def _row2(self):
         w = QWidget(); w.setStyleSheet("background:transparent;")
         h = QHBoxLayout(w); h.setContentsMargins(0,0,0,0); h.setSpacing(12)
@@ -527,7 +520,7 @@ class GuardaFormModal(BaseModal):
         lbl.setContentsMargins(0, 8, 0, 2)
         return lbl
 
-    # ── Foto ──────────────────────────────────────────────────────────────────
+    #  Foto 
     def _sel_foto(self):
         path, _ = QFileDialog.getOpenFileName(
             self, "Seleccionar foto de perfil", "",
@@ -538,7 +531,6 @@ class GuardaFormModal(BaseModal):
         self._foto_lbl.setStyleSheet(f"color:{SUCCESS_TEXT}; background:transparent;")
         self._foto_preview.set_photo(path)
 
-    # ── Fill ──────────────────────────────────────────────────────────────────
     def _fill(self):
         d = self._guarda_data
         self._num_doc.set(d.get("num_doc",""))
@@ -563,7 +555,6 @@ class GuardaFormModal(BaseModal):
                 self._foto_lbl.setText("✓ Foto actual — clic para cambiar")
                 self._foto_lbl.setStyleSheet(f"color:{SUCCESS_TEXT}; background:transparent;")
 
-    # ── Save ──────────────────────────────────────────────────────────────────
     def _save(self):
         for f in [self._num_doc, self._nombres, self._apellidos,
                   self._email, self._tel, self._fecha_nac, self._empresa]:
@@ -694,6 +685,5 @@ class GuardaFormModal(BaseModal):
         return None
 
 
-# Necesario para que QPushButton funcione en el módulo
 from PyQt6.QtWidgets import QPushButton as _QPB
 QPushButton = _QPB

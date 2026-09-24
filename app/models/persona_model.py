@@ -1,13 +1,11 @@
-"""
-Modelo para operaciones CRUD sobre persona y cuenta en la BD saia.
-"""
+
 import bcrypt
 from app.config.database import db_saia
 
 
 class PersonaModel:
 
-    # ── Persona ─────────────────────────────────────────────────────────────────
+    #  Persona 
 
     @staticmethod
     def get_all(search: str = "") -> list[dict]:
@@ -86,7 +84,7 @@ class PersonaModel:
 
 class CuentaModel:
 
-    # ── Cuenta ──────────────────────────────────────────────────────────────────
+    #  Cuenta 
 
     @staticmethod
     def create(num_doc: int, id_rol: int, password_plain: str,
@@ -140,7 +138,6 @@ class CuentaModel:
 
     @staticmethod
     def get_login_data(num_doc: int) -> dict | None:
-        """Busca cuenta por num_doc sin filtrar por estado (el login maneja eso)."""
         q = """
             SELECT c.*, p.nombres, p.p_ape, p.email, r.nom_rol
             FROM cuenta c
@@ -152,7 +149,6 @@ class CuentaModel:
 
     @staticmethod
     def get_login_by_email(email: str) -> dict | None:
-        """Busca cuenta por email del administrador para el login."""
         q = """
             SELECT c.*, p.nombres, p.p_ape, p.email, r.nom_rol
             FROM cuenta c

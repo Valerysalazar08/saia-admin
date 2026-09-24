@@ -1,6 +1,4 @@
-"""
-ÁTOMOS Qt — Labels, badges, stat cards, dividers.
-"""
+
 from PyQt6.QtWidgets import (
     QLabel, QFrame, QWidget, QVBoxLayout, QHBoxLayout,
     QSizePolicy,
@@ -20,7 +18,6 @@ from app.ui.theme import (
 
 
 class Heading(QLabel):
-    """Título con nivel 1–3."""
 
     _SIZES = {1: (28, True), 2: (22, True), 3: (18, True)}
 
@@ -32,7 +29,6 @@ class Heading(QLabel):
 
 
 class BodyLabel(QLabel):
-    """Texto de cuerpo con opción muted."""
 
     def __init__(self, text: str = "", muted: bool = False, parent=None):
         super().__init__(text, parent)
@@ -42,7 +38,6 @@ class BodyLabel(QLabel):
 
 
 class Badge(QFrame):
-    """Pastilla de estado con colores predefinidos."""
 
     PRESETS = {
         "activo":    ("#ECFDF5", "#15803D", "Activo"),
@@ -91,13 +86,10 @@ class Badge(QFrame):
         lbl.setStyleSheet(f"color:{color}; background:transparent;")
         lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
         lay.addWidget(lbl)
-        # Al renderizarse en una columna ancha, el espacio sobrante queda al
-        # final y no entre el indicador y el texto de la etiqueta.
         lay.addStretch()
 
 
 class StatCard(QFrame):
-    """Tarjeta de estadística grande con número y título."""
 
     def __init__(self, title: str = "", value=0,
                  icon: str = "", color: str = None, parent=None):
@@ -119,7 +111,7 @@ class StatCard(QFrame):
         root_lay.setContentsMargins(0, 0, 0, 0)
         root_lay.setSpacing(0)
 
-        # Barra superior de acento (3px)
+
         bar = QFrame()
         bar.setFixedHeight(4)
         bar.setStyleSheet(f"background:{accent}; border-radius:0; border:none;")
@@ -171,7 +163,6 @@ class StatCard(QFrame):
 
 
 class Divider(QFrame):
-    """Separador horizontal de 1px."""
 
     def __init__(self, parent=None):
         super().__init__(parent)

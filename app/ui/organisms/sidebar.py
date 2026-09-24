@@ -1,6 +1,4 @@
-"""
-ORGANISMO Qt — Sidebar de navegación lateral SAIA.
-"""
+
 from PyQt6.QtWidgets import (
     QWidget, QFrame, QLabel, QPushButton, QScrollArea,
     QVBoxLayout, QHBoxLayout, QSizePolicy,
@@ -31,8 +29,7 @@ NAV_ITEMS = [
 
 
 class _AvatarWidget(QWidget):
-    """Círculo de color sólido con ícono SVG centrado — pintado con QPainter."""
-
+ 
     def __init__(self, color: str, icon_pixmap: QPixmap,
                  size: int = 36, parent=None):
         super().__init__(parent)
@@ -63,8 +60,6 @@ _EXTRA = ["layout-dashboard","graduation-cap","shield","clipboard-list",
           "bell","calendar","package","users","building-2","clock",
           "circle-check","refresh-cw","bar-chart-2"]
 
-# Los iconos se distribuyen con la aplicación. No se descargan ni se ejecutan
-# procesos auxiliares mientras se construyen las vistas.
 
 
 class Sidebar(QFrame):
@@ -89,7 +84,6 @@ class Sidebar(QFrame):
         root.setContentsMargins(0, 0, 0, 0)
         root.setSpacing(0)
 
-        # ── Logo ──────────────────────────────────────────────────────────────
         logo_frame = QFrame()
         logo_frame.setFixedHeight(HEADER_HEIGHT)
         logo_frame.setStyleSheet(f"background:{BG_SIDEBAR}; border:none;")
@@ -109,7 +103,6 @@ class Sidebar(QFrame):
             logo_img.setStyleSheet("background:transparent; border:none;")
             ll.addWidget(logo_img)
 
-        # "SAIA" y "Admin" en la misma línea, mismo widget
         brand = QLabel("SAIA  <span style='color:#9CA3AF; font-weight:normal; font-size:11px;'>Admin</span>")
         brand.setFont(font(17, bold=True))
         brand.setStyleSheet(f"color:{PRIMARY}; background:transparent;")
@@ -123,7 +116,7 @@ class Sidebar(QFrame):
         sep1.setStyleSheet(f"background:{BORDER}; border:none;")
         root.addWidget(sep1)
 
-        # ── Perfil ─────────────────────────────────────────────────────────
+        # Perfil 
         profile = QFrame()
         profile.setFixedHeight(70)
 
@@ -145,7 +138,7 @@ class Sidebar(QFrame):
         pl.addWidget(avatar)
 
 
-        # ── Información del administrador ─────────────────────────────────
+        # Información del administrador 
         info = QVBoxLayout()
         info.setSpacing(2)
         info.setContentsMargins(0, 0, 0, 0)
@@ -171,7 +164,7 @@ class Sidebar(QFrame):
 
         root.addWidget(profile)
 
-        # ── Nav ───────────────────────────────────────────────────────────────
+        #  Nav
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
         scroll.setFrameShape(QFrame.Shape.NoFrame)
@@ -209,7 +202,7 @@ class Sidebar(QFrame):
         scroll.setWidget(nav_w)
         root.addWidget(scroll, stretch=1)
 
-        # ── Cerrar sesión ─────────────────────────────────────────────────────
+        # Cerrar sesión 
         sep2 = QFrame(); sep2.setFixedHeight(1)
         sep2.setStyleSheet(f"background:{BORDER}; border:none;")
         root.addWidget(sep2)

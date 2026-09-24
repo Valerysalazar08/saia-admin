@@ -1,6 +1,4 @@
-"""
-Diálogos base y de confirmación de la aplicación.
-"""
+
 from PyQt6.QtWidgets import (
     QDialog, QWidget, QFrame, QLabel, QPushButton,
     QScrollArea, QHBoxLayout, QVBoxLayout, QSizePolicy,
@@ -18,9 +16,6 @@ from app.ui.theme import (
 )
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Botones inline (para no crear dependencia circular con atoms)
-# ─────────────────────────────────────────────────────────────────────────────
 
 def _mk_btn(text: str, bg: str, hover: str, tc: str,
             height: int = BTN_HEIGHT, radius: int = BTN_RADIUS,
@@ -71,7 +66,6 @@ def _danger_btn(text: str, min_w: int = 130) -> QPushButton:
 
 
 class _ModalHeader(QFrame):
-    """Cabecera arrastrable para los diálogos sin marco nativo."""
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -98,19 +92,9 @@ class _ModalHeader(QFrame):
         super().mouseReleaseEvent(event)
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # BaseModal
-# ─────────────────────────────────────────────────────────────────────────────
 
 class BaseModal(QDialog):
-    """
-    Ventana modal base para formularios CRUD.
-    Expone:
-        - self.content  → widget de contenido (scrolleable o no)
-        - self.add_footer_buttons(...)
-        - self.show_error(msg)
-        - self.show_success(msg)
-    """
 
     def __init__(self, parent, title: str,
                  width: int = 480, height: int = 520,
@@ -195,10 +179,9 @@ class BaseModal(QDialog):
 
         surface_layout.addWidget(header)
 
-        # ── Zona de toast (se inserta aquí encima del contenido) ──────────────
-        self._toast_anchor = surface_layout  # referencia para insertar toast
+        self._toast_anchor = surface_layout  
 
-        # ── Contenido ────────────────────────────────────────────────────────
+        # Contenido 
         if scrollable:
             scroll = QScrollArea()
             scroll.setWidgetResizable(True)
@@ -223,7 +206,7 @@ class BaseModal(QDialog):
             self._content_layout.setSpacing(6)
             surface_layout.addWidget(self._content_widget, stretch=1)
 
-        # ── Footer ───────────────────────────────────────────────────────────
+        # Footer 
         self._footer = QFrame()
         self._footer.setFixedHeight(60)
         self._footer.setStyleSheet(f"""
@@ -239,13 +222,11 @@ class BaseModal(QDialog):
         self._footer_lay.setSpacing(8)
         surface_layout.addWidget(self._footer)
 
-    # ── Propiedad content ─────────────────────────────────────────────────────
     @property
     def content(self) -> QWidget:
         """Widget de contenido al que las subclases añaden sus widgets."""
         return self._content_widget
 
-    # ── Helpers para añadir al contenido ─────────────────────────────────────
     def _add_to_content(self, widget: QWidget):
         """Inserta un widget antes del stretch final (si scrollable)."""
         count = self._content_layout.count()
@@ -255,7 +236,6 @@ class BaseModal(QDialog):
         else:
             self._content_layout.addWidget(widget)
 
-    # ── Footer buttons ────────────────────────────────────────────────────────
     def add_footer_buttons(self,
                            confirm_text: str = "Guardar",
                            confirm_cmd=None,
@@ -280,7 +260,6 @@ class BaseModal(QDialog):
             confirm.clicked.connect(self.accept)
         self._footer_lay.addWidget(confirm)
 
-    # ── Toast de error ────────────────────────────────────────────────────────
     def show_error(self, message: str):
         self._clear_toast()
 
@@ -315,7 +294,6 @@ class BaseModal(QDialog):
         x_btn.clicked.connect(self._clear_toast)
         tl.addWidget(x_btn)
 
-        # Posicionar debajo del header (y=53)
         toast.setGeometry(24, 61, self.width() - 48, 42)
         toast.show()
         toast.raise_()
@@ -348,18 +326,8 @@ class BaseModal(QDialog):
         QTimer.singleShot(3000, lbl.deleteLater)
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# ConfirmModal — bloquea hasta que el usuario confirma o cancela
-# ─────────────────────────────────────────────────────────────────────────────
 
 class ConfirmModal(BaseModal):
-    """
-    Modal de confirmación modal y bloqueante.
-    Uso:
-        dlg = ConfirmModal(parent, title="...", message="...", danger=True)
-        if dlg.confirmed:
-            ...
-    """
 
     def __init__(self, parent, title: str, message: str,
                  confirm_text: str = "Confirmar",
@@ -371,7 +339,6 @@ class ConfirmModal(BaseModal):
                          scrollable=False)
         self._confirmed = False
 
-        # La confirmación muestra contexto y gravedad sin dejar un bloque vacío.
         tone = ERROR if danger else PRIMARY
         tone_bg = ERROR_BG if danger else BG_PALE
         icon_name = "ban" if danger else "shield"

@@ -89,8 +89,7 @@ class AdministradoresView(QWidget):
 
 
 class AdminFormModal(BaseModal):
-    # El alta de administradores solo admite los tres documentos definidos para
-    # personal adulto.  No usamos un campo de texto para evitar valores libres.
+ 
     TIPOS_DOCUMENTO = ["Cédula de Ciudadanía", "Cédula de Extranjería", "Pasaporte"]
 
     def __init__(self, parent, admin=None, on_save=None):

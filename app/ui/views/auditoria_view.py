@@ -1,6 +1,4 @@
-"""
-VISTA Qt — Historial de auditoría con exportación PDF/Excel.
-"""
+
 import os, threading
 from datetime import datetime
 from pathlib import Path
@@ -61,7 +59,7 @@ class AuditoriaView(QWidget):
         tbl = QHBoxLayout(tb); tbl.setContentsMargins(0,0,0,0); tbl.setSpacing(8)
         tbl.addWidget(Heading("Historial de Auditoría", level=2), stretch=1)
 
-        # Acciones compactas y visualmente consistentes
+
         refresh_btn = QPushButton_("↻  Actualizar", PRIMARY, "#F0FAFD", self.load_data)
         pdf_btn = QPushButton_("PDF", ERROR, "#FFF1F2", lambda: self._export("pdf"))
         xls_btn = QPushButton_("Excel", "#168A62", "#EDFCF6", lambda: self._export("excel"))
@@ -69,9 +67,9 @@ class AuditoriaView(QWidget):
         tbl.addWidget(pdf_btn); tbl.addWidget(xls_btn)
         lay.addWidget(tb); lay.addSpacing(10)
 
-        # Filtros
+
         fc = QFrame()
-        # El selector por id evita que este estilo se aplique también a los inputs internos.
+
         fc.setObjectName("AuditFilterCard")
         fc.setStyleSheet(f"""
             QFrame#AuditFilterCard {{
@@ -158,13 +156,11 @@ class AuditoriaView(QWidget):
         h.addWidget(lbl); h.addStretch(); return w
 
     def _filter_changed(self):
-        """Recarga datos únicamente cuando el usuario cambia un filtro."""
         if not self._updating_filters:
             self.load_data()
 
 
     def _load_filter_options(self):
-        """Carga las opciones una sola vez; no durante cada actualización."""
         try:
             self._updating_filters = True
 

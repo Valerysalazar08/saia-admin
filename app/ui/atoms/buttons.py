@@ -1,6 +1,4 @@
-"""
-ÁTOMOS Qt — Botones reutilizables SAIA.
-"""
+
 from PyQt6.QtWidgets import QPushButton, QLabel
 from PyQt6.QtGui import QPainter, QColor, QFont, QIcon, QCursor
 from PyQt6.QtCore import Qt, QSize, QPoint
@@ -15,7 +13,7 @@ from app.ui.theme import (
 
 
 class GradientButton(QPushButton):
-    """Botón principal con gradiente celeste→verde. Usa paintEvent custom."""
+    """Botón gradiente """
 
     def __init__(self, text: str = "", parent=None):
         super().__init__(text, parent)
@@ -47,7 +45,6 @@ class GradientButton(QPushButton):
 
 
 class PrimaryButton(QPushButton):
-    """Botón sólido color primario."""
 
     def __init__(self, text: str = "", parent=None, width: int = 140, height: int = None):
         super().__init__(text, parent)
@@ -75,7 +72,6 @@ class PrimaryButton(QPushButton):
 
 
 class SecondaryButton(QPushButton):
-    """Acción secundaria ligera, alineada con el estilo de Auditoría."""
 
     def __init__(self, text: str = "", parent=None, width: int = 140, height: int = None):
         super().__init__(text, parent)
@@ -102,7 +98,6 @@ class SecondaryButton(QPushButton):
 
 
 class DangerButton(QPushButton):
-    """Botón destructivo rojo."""
 
     def __init__(self, text: str = "", parent=None, width: int = 140, height: int = None):
         super().__init__(text, parent)
@@ -182,7 +177,6 @@ class SmallButton(QPushButton):
 
 
 class TableActionButton(QPushButton):
-    """Acción compacta para tablas con icono y ayuda visual al pasar."""
 
     _PRESETS = {
         "primary": ("#E8F8FC", PRIMARY, "#C6ECF5", PRIMARY_HOVER),

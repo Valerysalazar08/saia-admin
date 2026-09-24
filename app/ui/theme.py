@@ -1,9 +1,4 @@
-"""
-TEMA CENTRAL — PyQt6
-Paleta de colores, fuentes, iconos Lucide y helpers de pintura.
-Importar desde cualquier módulo Qt de la app:
-    from app.ui.theme import PRIMARY, font, svg_icon, ...
-"""
+
 from pathlib import Path
 from PyQt6.QtGui import (
     QFont, QColor, QPixmap, QPainter, QBrush, QLinearGradient, QPen,
@@ -11,13 +6,13 @@ from PyQt6.QtGui import (
 from PyQt6.QtCore import Qt, QRectF
 from PyQt6.QtSvg import QSvgRenderer
 
-# ── Rutas ─────────────────────────────────────────────────────────────────────
+# Rutas 
 ROOT_DIR      = Path(__file__).resolve().parent.parent.parent
 ICONS_DIR     = ROOT_DIR / "src" / "icons"
 LOGO_GRADIENT = ROOT_DIR / "src" / "logos" / "LogoGradiente.png"
 LOGO_WHITE    = ROOT_DIR / "src" / "logos" / "LogoBlanco.png"
 
-# ── Paleta ────────────────────────────────────────────────────────────────────
+# Colores 
 PRIMARY         = "#33BEDC"
 PRIMARY_HOVER   = "#28A8C8"
 PRIMARY_DARK    = "#1E8FAA"
@@ -60,7 +55,6 @@ TABLE_ROW_ODD     = "#F9FAFB"
 TABLE_ROW_HOVER   = "#EBF9FC"
 TABLE_SELECTED    = "#E0F7FA"
 
-# ── Dimensiones ───────────────────────────────────────────────────────────────
 SIDEBAR_WIDTH  = 240
 HEADER_HEIGHT  = 60
 BTN_HEIGHT     = 40
@@ -74,11 +68,9 @@ CARD_RADIUS    = 16
 BADGE_RADIUS   = 12
 
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
 
 def font(size: int = 13, bold: bool = False, family: str = "Segoe UI") -> QFont:
     """Devuelve un QFont. Tamaños reducidos para mejor densidad visual."""
-    # Reducimos 2pt para compensar el escalado de DPI en Windows
     adjusted = max(8, size - 2)
     f = QFont(family, adjusted)
     if bold:
@@ -87,10 +79,6 @@ def font(size: int = 13, bold: bool = False, family: str = "Segoe UI") -> QFont:
 
 
 def svg_icon(name: str, size: int, color: str) -> QPixmap:
-    """
-    Carga un SVG de Lucide, colorea el stroke y devuelve un QPixmap nítido.
-    Renderiza a 2× y escala hacia abajo para evitar pixelado.
-    """
     svg_path = ICONS_DIR / f"{name}.svg"
     if not svg_path.exists():
         px = QPixmap(size, size)
@@ -124,7 +112,6 @@ def paint_gradient_btn(
     hovered: bool = False,
     radius: int = 25,
 ) -> None:
-    """Pinta un fondo con gradiente celeste→verde en el rect dado."""
     painter.setRenderHint(QPainter.RenderHint.Antialiasing)
     grad = QLinearGradient(0, 0, rect.width(), 0)
     if hovered:
@@ -138,7 +125,6 @@ def paint_gradient_btn(
     painter.drawRoundedRect(QRectF(rect), radius, radius)
 
 
-# ── Stylesheets reutilizables ─────────────────────────────────────────────────
 
 def _input_ss(border_color: str) -> str:
     return (

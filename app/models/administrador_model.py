@@ -1,4 +1,4 @@
-"""Gestión de cuentas administradoras, exclusiva del superadministrador."""
+"""Gestión de cuentas administradores (superadministrador)"""
 from app.config.database import db_saia
 
 

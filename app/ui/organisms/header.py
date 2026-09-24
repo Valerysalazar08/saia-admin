@@ -1,6 +1,4 @@
-"""
-ORGANISMO Qt — Header superior SAIA.
-"""
+
 from datetime import datetime
 from PyQt6.QtWidgets import QFrame, QLabel, QHBoxLayout
 from PyQt6.QtCore import Qt, QTimer

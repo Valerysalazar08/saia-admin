@@ -1,7 +1,4 @@
-"""
-MOLÉCULA Qt — DataTable con paginación.
-Tabla de datos reutilizable para las vistas de la aplicación.
-"""
+
 from PyQt6.QtWidgets import (
     QWidget, QFrame, QLabel, QPushButton,
     QHBoxLayout, QVBoxLayout, QScrollArea, QSizePolicy,
@@ -20,16 +17,7 @@ PAGE_SIZE = 25
 
 
 class DataTable(QWidget):
-    """
-    Tabla con cabecera fija, cuerpo scrolleable y paginación.
-
-    columns: list[dict]  — cada dict tiene:
-        "key"      : str            clave del dict de datos
-        "header"   : str            texto de cabecera
-        "width"    : int            ancho de columna en px
-        "renderer" : callable|None  fn(parent_widget, row_dict, value) -> QWidget
-    """
-
+    
     def __init__(self, parent=None, columns: list = None,
                  on_select=None, on_double_click=None,
                  row_height: int = 52, page_size: int = PAGE_SIZE):
@@ -56,7 +44,7 @@ class DataTable(QWidget):
         root.setContentsMargins(0, 0, 0, 0)
         root.setSpacing(0)
 
-        # ── Cabecera ─────────────────────────────────────────────────────────
+        # Cabecera 
         self._header = QFrame()
         self._header.setFixedHeight(40)
         self._header.setStyleSheet(f"""
@@ -69,7 +57,7 @@ class DataTable(QWidget):
         root.addWidget(self._header)
         self._build_header()
 
-        # ── Cuerpo scrolleable ────────────────────────────────────────────────
+        # Cuerpo scrolleable 
         self._scroll = QScrollArea()
         self._scroll.setWidgetResizable(True)
         self._scroll.setFrameShape(QFrame.Shape.NoFrame)
@@ -87,7 +75,6 @@ class DataTable(QWidget):
         self._scroll.setWidget(self._body_widget)
         root.addWidget(self._scroll, stretch=1)
 
-        # ── Footer paginación ─────────────────────────────────────────────────
         self._footer = QFrame()
         self._footer.setFixedHeight(38)
         self._footer.setStyleSheet(f"""
@@ -99,9 +86,6 @@ class DataTable(QWidget):
         root.addWidget(self._footer)
         self._build_footer()
 
-    # ─────────────────────────────────────────────────────────────────────────
-    # Construcción de cabecera
-    # ─────────────────────────────────────────────────────────────────────────
 
     def _build_header(self):
         # Limpiar
@@ -117,7 +101,6 @@ class DataTable(QWidget):
         lay.setContentsMargins(8, 0, 8, 0)
         lay.setSpacing(0)
 
-        # Nº fila
         n = QLabel("#")
         n.setFixedWidth(36)
         n.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -139,9 +122,6 @@ class DataTable(QWidget):
 
         lay.addStretch()
 
-    # ─────────────────────────────────────────────────────────────────────────
-    # Footer de paginación
-    # ─────────────────────────────────────────────────────────────────────────
 
     def _build_footer(self):
         old = self._footer.layout()
@@ -193,9 +173,6 @@ class DataTable(QWidget):
             b.clicked.connect(fn)
             lay.addWidget(b)
 
-    # ─────────────────────────────────────────────────────────────────────────
-    # Paginación
-    # ─────────────────────────────────────────────────────────────────────────
 
     def _total_pages(self):
         return max(1, -(-len(self._rows_data) // self._page_size))
@@ -221,19 +198,15 @@ class DataTable(QWidget):
             self._page -= 1
             self._render_page()
 
-    # ─────────────────────────────────────────────────────────────────────────
-    # Renderizado de filas
-    # ─────────────────────────────────────────────────────────────────────────
+
 
     def _render_page(self):
-        # Limpiar filas anteriores
         for w in self._row_widgets:
             w.setParent(None)
             w.deleteLater()
         self._row_widgets.clear()
         self._selected_idx = None
 
-        # Quitar el stretch del final
         stretch = self._body_layout.takeAt(self._body_layout.count() - 1)
 
         start = self._page * self._page_size
@@ -255,7 +228,6 @@ class DataTable(QWidget):
             lay.setContentsMargins(8, vertical_padding, 8, vertical_padding)
             lay.setSpacing(0)
 
-            # Nº fila
             n_lbl = QLabel(str(global_i + 1))
             n_lbl.setFixedWidth(36)
             n_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -294,7 +266,6 @@ class DataTable(QWidget):
 
             lay.addStretch()
 
-            # Click / doble click
             row_frame.mousePressEvent = lambda e, idx=local_i: \
                 self._select(idx)
             if self._on_dbl:
@@ -308,9 +279,6 @@ class DataTable(QWidget):
         self._body_layout.addStretch()
         self._build_footer()
 
-    # ─────────────────────────────────────────────────────────────────────────
-    # Selección
-    # ─────────────────────────────────────────────────────────────────────────
 
     def _select(self, local_idx: int):
         if self._selected_idx is not None and \
@@ -330,9 +298,7 @@ class DataTable(QWidget):
             global_idx = self._page * self._page_size + local_idx
             self._on_select(self._rows_data[global_idx])
 
-    # ─────────────────────────────────────────────────────────────────────────
-    # API pública
-    # ─────────────────────────────────────────────────────────────────────────
+ 
 
     def load(self, data: list[dict]):
         self._rows_data      = data

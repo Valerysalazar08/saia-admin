@@ -1,4 +1,3 @@
-"""VISTA Qt — Gestión de reportes de rechazo de ingreso."""
 import threading
 from PyQt6.QtWidgets import QWidget, QLabel, QTextEdit, QVBoxLayout, QHBoxLayout
 from PyQt6.QtCore import QObject, pyqtSignal

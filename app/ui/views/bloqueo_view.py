@@ -1,6 +1,3 @@
-"""
-VISTA Qt — Usuarios bloqueados.
-"""
 import threading
 from PyQt6.QtWidgets import QWidget, QLabel, QHBoxLayout, QVBoxLayout
 from PyQt6.QtCore import QObject, pyqtSignal

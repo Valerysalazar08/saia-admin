@@ -37,10 +37,6 @@ CIRCLE         = "#B2F0DC"
 DOT            = "#C8F5E6"
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Iconos vectoriales dibujados con QPainter → QPixmap
-# ─────────────────────────────────────────────────────────────────────────────
-
 ICONS_DIR = ROOT / "src" / "icons"
 
 
@@ -55,11 +51,9 @@ def _svg_icon(name: str, size: int, color: str) -> QPixmap:
 
     svg_data = svg_path.read_text(encoding="utf-8")
     svg_data = svg_data.replace("currentColor", color)
-    # Aumentamos stroke-width ligeramente para mejor visibilidad
     svg_data = svg_data.replace('stroke-width="2"', 'stroke-width="2.2"')
     svg_bytes = svg_data.encode("utf-8")
 
-    # Render a 2x para nitidez, luego escalar
     render_size = size * 2
     px = QPixmap(render_size, render_size)
     px.fill(Qt.GlobalColor.transparent)
@@ -75,7 +69,6 @@ def _svg_icon(name: str, size: int, color: str) -> QPixmap:
                      Qt.TransformationMode.SmoothTransformation)
 
 
-# ── Atajos para los iconos más usados ────────────────────────────────────────
 
 def _icon_user(size=20, color=TEXT_MUTED) -> QPixmap:
     return _svg_icon("user", size, color)
@@ -86,9 +79,7 @@ def _icon_lock(size=20, color=TEXT_MUTED) -> QPixmap:
 def _icon_eye(size=20, color=TEXT_MUTED, closed=False) -> QPixmap:
     return _svg_icon("eye-off" if closed else "eye", size, color)
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Input con icono vectorial
-# ─────────────────────────────────────────────────────────────────────────────
+
 
 class _IconInput(QFrame):
     _SS_NORMAL = ""
@@ -137,7 +128,7 @@ class _IconInput(QFrame):
         self.edit.installEventFilter(self)
         h.addWidget(self.edit, stretch=1)
 
-        # Botón ojo con icono vectorial
+
         if password:
             self._eye_visible = False
             self._eye_btn = QPushButton()
@@ -174,9 +165,9 @@ class _IconInput(QFrame):
     def clear_error(self): self.setStyleSheet(_IconInput._SS_NORMAL)
 
 
-# ─────────────────────────────────────────────────────────────────────────────
+
 # Botón gradiente
-# ─────────────────────────────────────────────────────────────────────────────
+
 
 class _GradientButton(QPushButton):
     def __init__(self, text, parent=None):
@@ -204,9 +195,6 @@ class _GradientButton(QPushButton):
         p.drawText(self.rect(), Qt.AlignmentFlag.AlignCenter, self.text())
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Worker de autenticación
-# ─────────────────────────────────────────────────────────────────────────────
 
 class _LoginWorker(QThread):
     success = pyqtSignal(dict)
@@ -257,9 +245,9 @@ class _LoginWorker(QThread):
         self.success.emit(user)
 
 
-# ─────────────────────────────────────────────────────────────────────────────
+
 # Ventana principal
-# ─────────────────────────────────────────────────────────────────────────────
+
 
 class LoginWindow(QWidget):
     def __init__(self, on_login_success=None):
@@ -276,8 +264,8 @@ class LoginWindow(QWidget):
 
         self._build()
 
-    # ── Fondo pintado ─────────────────────────────────────────────────────────
-    def paintEvent(self, event):
+   # Fondo
+       def paintEvent(self, event):
         p = QPainter(self)
         p.setRenderHint(QPainter.RenderHint.Antialiasing)
         p.fillRect(self.rect(), QColor(BG_APP))
@@ -305,7 +293,7 @@ class LoginWindow(QWidget):
         if hasattr(self, "_footer"):
             self._footer.setGeometry(0, self.height()-36, self.width(), 36)
 
-    # ── Layout principal ──────────────────────────────────────────────────────
+    #  Layout 
     def _build(self):
         root = QHBoxLayout(self)
         root.setContentsMargins(0, 0, 0, 0)
@@ -320,9 +308,9 @@ class LoginWindow(QWidget):
         layout.setContentsMargins(30, 20, 30, 45)
         layout.setSpacing(80)
 
-        # ─────────────────────────
+
         # IZQUIERDA
-        # ─────────────────────────
+
 
         left = QWidget()
         left.setMinimumWidth(430)
@@ -338,9 +326,9 @@ class LoginWindow(QWidget):
         )
         left_layout.addStretch()
 
-        # ─────────────────────────
+
         # DERECHA
-        # ─────────────────────────
+
 
         right = QWidget()
         right.setMinimumWidth(430)
@@ -359,7 +347,6 @@ class LoginWindow(QWidget):
         layout.addWidget(left)
         layout.addWidget(right)
 
-        # Centrar TODO el conjunto
         root.addStretch()
         root.addWidget(container)
         root.addStretch()
@@ -454,7 +441,6 @@ class LoginWindow(QWidget):
         h.setContentsMargins(0, 0, 0, 0)
         h.setSpacing(14)
 
-        # Cuadrito icono con fondo celeste
         box = QWidget()
         box.setFixedSize(46, 46)
         box.setStyleSheet(
@@ -498,7 +484,6 @@ class LoginWindow(QWidget):
         }
         return _svg_icon(lucide_map.get(name, name), size, color)
 
-    # ── Tarjeta derecha ───────────────────────────────────────────────────────
     def _make_card(self) -> QFrame:
         card = QFrame()
         card.setFixedWidth(430)
@@ -618,7 +603,7 @@ class LoginWindow(QWidget):
         lay.addWidget(forgot, alignment=Qt.AlignmentFlag.AlignCenter)
         return card
 
-    # ── Lógica de login ───────────────────────────────────────────────────────
+
     def _do_login(self):
         doc = self._doc_input.text().strip()
         pwd = self._pwd_input.text()
@@ -665,7 +650,7 @@ class LoginWindow(QWidget):
         self._err.setText(msg)
 
 
-# ─────────────────────────────────────────────────────────────────────────────
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setStyle("Fusion")

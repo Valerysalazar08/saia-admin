@@ -1,4 +1,3 @@
-"""VISTA Qt — Gestión de aprendices registrados en SAIA y SENA."""
 import logging
 import threading
 from PyQt6.QtWidgets import (
@@ -104,8 +103,7 @@ class AprendicesView(QWidget):
         self._status.setStyleSheet(f"color:{TEXT_MUTED}; background:transparent;")
         lay.addWidget(self._status)
 
-        # _set_tab carga los datos iniciales; no duplicar la consulta desde
-        # __init__, porque al abrir por primera vez se iniciaban dos hilos.
+
         self._set_tab("saia")
 
     def _mk_tab(self, text: str, tab_id: str) -> QPushButton:
@@ -142,7 +140,6 @@ class AprendicesView(QWidget):
         logging.getLogger("saia.aprendices").info("Pestaña seleccionada: %s", tab_id)
         self.load_data()
 
-    # ── Renderers ─────────────────────────────────────────────────────────────
     def _render_qr(self, parent, row, val):
         w = QWidget(parent); w.setStyleSheet("background:transparent;")
         h = QHBoxLayout(w); h.setContentsMargins(4,0,0,0)
@@ -170,7 +167,6 @@ class AprendicesView(QWidget):
         ver.clicked.connect(lambda: self._ver(row))
         h.addWidget(ver); h.addStretch(); return w
 
-    # ── Datos ─────────────────────────────────────────────────────────────────
     def load_data(self, search: str = None):
         search = self._search.get() if search is None else search
         sig = _Sig(self)
@@ -206,7 +202,6 @@ class AprendicesView(QWidget):
         if self._tab == "saia":
             self.load_data()
 
-    # ── Acciones ──────────────────────────────────────────────────────────────
     def _bloquear(self, row: dict):
         nombre = f"{row.get('nombres','')} {row.get('p_ape','')}".strip()
         try:
@@ -263,8 +258,7 @@ class AprendicesView(QWidget):
             parent = parent.parentWidget()
 
     def _ver(self, row: dict):
-        # Crear el diálogo no lo muestra por sí solo. ``exec`` lo abre de
-        # forma modal y mantiene la instancia viva hasta que se cierre.
+
         dlg = AprendizDetalleModal(self, row)
         dlg.exec()
 

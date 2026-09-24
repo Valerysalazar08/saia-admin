@@ -1,10 +1,7 @@
-"""
-Modelo para auditoria_actividad en BD saia.
-Registra todas las acciones del administrador.
-"""
+
 from app.config.database import db_saia
 
-# Constantes de acciones y entidades (igual que en el Java)
+
 ACCION_CREAR       = "CREAR"
 ACCION_ACTUALIZAR  = "ACTUALIZAR"
 ACCION_BLOQUEAR    = "BLOQUEAR"
@@ -25,7 +22,6 @@ class AuditoriaModel:
     @staticmethod
     def registrar(tipo_accion: str, entidad: str, num_doc: int,
                   descripcion: str, realizado_por: int = None):
-        """Inserta un registro de auditoría. Silencioso en caso de error."""
         q = """
             INSERT INTO auditoria_actividad
                 (tipo_accion, entidad, num_doc, descripcion, realizado_por)
